@@ -17,9 +17,9 @@ module autodiff_interfaces
             type(dual), intent(in) :: x(:)
                 !! Input values and derivative seeds; for seed vector \(v\), the
                 !! returned derivative is \(D f(x)[v] = \nabla f(x)^{T}v\).
-            class(*), intent(inout), optional :: args
-                !! Optional caller-owned context passed to the function, which 
-                !! may update it.
+            class(*), intent(in), optional :: args
+                !! Optional caller-owned context passed to the function.  It is
+                !! read-only from the function's perspective.
             type(dual) :: f
                 !! Function value in `f%x` and directional derivative in `f%dx`.
         end function
@@ -35,9 +35,9 @@ module autodiff_interfaces
             type(dual), intent(out), dimension(:) :: f
                 !! Output values and derivatives; the derivatives form 
                 !! \(J_f(x)v\), where \(J_f(x)\) is the Jacobian.
-            class(*), intent(inout), optional :: args
-                !! Optional caller-owned context passed to the procedure, which 
-                !! may update it.
+            class(*), intent(in), optional :: args
+                !! Optional caller-owned context passed to the procedure.  It is
+                !! read-only from the procedure's perspective.
         end subroutine
 
     end interface

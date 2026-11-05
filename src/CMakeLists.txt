@@ -10,6 +10,29 @@ add_library(autodiff
 
 add_library(autodiff::autodiff ALIAS autodiff)
 
+option(AUTODIFF_ENABLE_IPO "Enable interprocedural optimization (LTO) when supported" ON)
+if(AUTODIFF_ENABLE_IPO)
+    include(CheckIPOSupported)
+    check_ipo_supported(RESULT autodiff_ipo_supported OUTPUT autodiff_ipo_output LANGUAGES Fortran)
+    if(autodiff_ipo_supported)
+        set_target_properties(autodiff PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+    else()
+        message(STATUS "Interprocedural optimization not supported: ${autodiff_ipo_output}")
+    endif()
+endif()
+
+option(AUTODIFF_ENABLE_OPENMP "Evaluate Jacobian columns in parallel with OpenMP when available" ON)
+if(AUTODIFF_ENABLE_OPENMP)
+    # FindOpenMP selects the correct flag for each Fortran compiler
+    # (e.g. -fopenmp for gfortran/ifx, -qopenmp for ifort, -mp for nvfortran).
+    find_package(OpenMP COMPONENTS Fortran)
+    if(OpenMP_Fortran_FOUND)
+        target_link_libraries(autodiff PUBLIC OpenMP::OpenMP_Fortran)
+    else()
+        message(STATUS "OpenMP Fortran support not found; Jacobian columns will be evaluated serially.")
+    endif()
+endif()
+
 set(autodiff_module_dir "${CMAKE_CURRENT_BINARY_DIR}/modules")
 if(CMAKE_CONFIGURATION_TYPES)
     set(autodiff_module_build_include_dir "${autodiff_module_dir}/$<CONFIG>")

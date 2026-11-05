@@ -18,6 +18,15 @@ Install it to the selected prefix (the default is platform-dependent):
 cmake --install build --prefix /path/to/install
 ```
 
+The build defaults to `Release` when no build type is given. Two options
+control optional features:
+
+- `AUTODIFF_ENABLE_OPENMP` (default `ON`): links OpenMP when found, so
+  `jacobian` can evaluate columns in parallel via its `nthreads` argument.
+  Pass `-DAUTODIFF_ENABLE_OPENMP=OFF` to build serially.
+- `AUTODIFF_ENABLE_IPO` (default `ON`): enables interprocedural optimization
+  (LTO) when the compiler supports it.
+
 The install includes the library, Fortran module files, and CMake package
 configuration. A CMake consumer can then use:
 

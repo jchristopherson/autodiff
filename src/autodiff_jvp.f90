@@ -21,11 +21,10 @@ contains
             !! Product of the Jacobian and v, satisfying \(Jv = J_f(x)v\).
         class(workspace), intent(inout), target, optional :: work
             !! An optional workspace to use in order to avoid internal memory
-            !! allocations.  If not sized properly, this routine will reallocate
+            !! allocations.  If not sized properly, this routine will grow
             !! the workspace to suit its needs.
-        class(*), intent(inout), optional :: args
-            !! Optional caller-owned context passed to the procedure, which 
-            !! may update it.
+        class(*), intent(in), optional :: args
+            !! Optional caller-owned context passed to the procedure.
 
         type(dual), allocatable, target, dimension(:) :: x_buffer, f_buffer
         type(dual), pointer, dimension(:) :: xd, fd

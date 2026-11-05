@@ -9,24 +9,28 @@ program test_differentiation
     implicit none
 
     type :: call_counter
-        integer :: calls = 0
+        integer, pointer :: calls => null()
     end type
 
+    integer, target :: total_calls
     type(call_counter) :: counter
     procedure(scalar_function), pointer :: scalar_proc
     procedure(vector_function), pointer :: vector_proc
     real(real64), parameter :: x(2) = [2.0_real64, 0.5_real64]
     real(real64), parameter :: v(2) = [3.0_real64, -2.0_real64]
     real(real64) :: g(2), j(2,2), jv_result(2)
-    real(real64) :: j_ws(2,2), jv_ws(2)
+    real(real64) :: j_ws(2,2), jv_ws(2), j_par(2,2)
     type(workspace) :: work, work_new, work_large, work_small, work_jvp
+    type(workspace) :: work_grad, work_par
     integer :: checks
 
     checks = 0
+    total_calls = 0
+    counter%calls => total_calls
     scalar_proc => scalar_test_function
     vector_proc => vector_test_function
 
-    call gradient(scalar_proc, x, g, counter)
+    call gradient(scalar_proc, x, g, args = counter)
     call check_close("gradient x1", g(1), 2.0_real64 * x(1) * x(2))
     call check_close("gradient x2", g(2), x(1)**2 + cos(x(2)))
     call check_true("gradient forwards optional context", counter%calls == 2)
@@ -63,7 +67,7 @@ program test_differentiation
     call work%resize(4, 3)
     call check_true("workspace resizes inputs independently", size(work%xd) == 4 .and. size(work%fd) == 3)
     call work%resize(4, 1)
-    call check_true("workspace resizes outputs independently", size(work%xd) == 4 .and. size(work%fd) == 1)
+    call check_true("workspace never shrinks outputs", size(work%xd) == 4 .and. size(work%fd) == 3)
 
     call work_large%resize(5, 4)
     call check_true("workspace validates larger buffers", work_large%validate_size(2, 2))
@@ -76,11 +80,12 @@ program test_differentiation
     call check_close("Jacobian with workspace (2,1)", j_ws(2,1), 1.0_real64)
     call check_close("Jacobian with workspace (2,2)", j_ws(2,2), -sin(x(2)))
     call check_true("Jacobian allocates empty workspace", &
-        size(work_new%xd) == 2 .and. size(work_new%fd) == 2)
-    call check_close("Jacobian workspace input seed cleared", work_new%xd(1)%dx, 0.0_real64)
-    call check_close("Jacobian workspace input seed applied", work_new%xd(2)%dx, 1.0_real64)
-    call check_close("Jacobian workspace output value", work_new%fd(1)%x, x(1) * x(2))
-    call check_close("Jacobian workspace output derivative", work_new%fd(2)%dx, -sin(x(2)))
+        size(work_new%xd) == 2 .and. size(work_new%fd) == 2 .and. &
+        size(work_new%xd_pool, 2) == 1 .and. size(work_new%fd_pool, 2) == 1)
+    call check_close("Jacobian workspace input seed 1 cleared", work_new%xd_pool(1,1)%dx, 0.0_real64)
+    call check_close("Jacobian workspace input seed 2 cleared", work_new%xd_pool(2,1)%dx, 0.0_real64)
+    call check_close("Jacobian workspace output value", work_new%fd_pool(1,1)%x, x(1) * x(2))
+    call check_close("Jacobian workspace output derivative", work_new%fd_pool(2,1)%dx, -sin(x(2)))
 
     call jacobian(vector_proc, x, j_ws, work_new)
     call check_true("Jacobian without context forwards no calls", counter%calls == 7)
@@ -122,18 +127,40 @@ program test_differentiation
     call check_close("JVP undersized workspace output 1", jv_ws(1), x(2) * v(1) + x(1) * v(2))
     call check_close("JVP undersized workspace output 2", jv_ws(2), v(1) - sin(x(2)) * v(2))
 
+    call gradient(scalar_proc, x, g, work = work_grad, args = counter)
+    call check_close("gradient with workspace x1", g(1), 2.0_real64 * x(1) * x(2))
+    call check_close("gradient with workspace x2", g(2), x(1)**2 + cos(x(2)))
+    call check_true("gradient with workspace forwards context", counter%calls == 10)
+    call check_true("gradient allocates input workspace", size(work_grad%xd) == 2)
+    call check_close("gradient workspace seed cleared", work_grad%xd(2)%dx, 0.0_real64)
+
+    call work_par%resize(2, 2, 2)
+    call check_true("parallel workspace allocates thread columns", &
+        size(work_par%xd_pool, 2) == 2 .and. size(work_par%fd_pool, 2) == 2)
+    call jacobian(vector_proc, x, j_par, work_par, args = counter, nthreads = 2)
+    call check_true("parallel Jacobian forwards context", counter%calls == 12)
+    call check_close("parallel Jacobian (1,1)", j_par(1,1), x(2))
+    call check_close("parallel Jacobian (1,2)", j_par(1,2), x(1))
+    call check_close("parallel Jacobian (2,1)", j_par(2,1), 1.0_real64)
+    call check_close("parallel Jacobian (2,2)", j_par(2,2), -sin(x(2)))
+
+    call jacobian(vector_proc, x, j_par, nthreads = 2)
+    call check_close("parallel Jacobian without workspace (1,2)", j_par(1,2), x(1))
+    call check_close("parallel Jacobian without workspace (2,2)", j_par(2,2), -sin(x(2)))
+
     write(output_unit, '(a,i0,a)') "Passed ", checks, " differentiation checks."
 
 contains
 
     function scalar_test_function(xd, args) result(y)
         type(dual), intent(in) :: xd(:)
-        class(*), intent(inout), optional :: args
+        class(*), intent(in), optional :: args
         type(dual) :: y
 
         if (present(args)) then
             select type (args)
             type is (call_counter)
+                !$omp atomic
                 args%calls = args%calls + 1
             class default
                 error stop "Unexpected scalar-function context type."
@@ -145,11 +172,12 @@ contains
     subroutine vector_test_function(xd, y, args)
         type(dual), intent(in) :: xd(:)
         type(dual), intent(out) :: y(:)
-        class(*), intent(inout), optional :: args
+        class(*), intent(in), optional :: args
 
         if (present(args)) then
             select type (args)
             type is (call_counter)
+                !$omp atomic
                 args%calls = args%calls + 1
             class default
                 error stop "Unexpected vector-function context type."
