@@ -1,0 +1,46 @@
+add_library(autodiff
+    autodiff.f90
+    autodiff_dual_numbers.f90
+    autodiff_interfaces.f90
+    autodiff_workspace.f90
+    autodiff_gradient.f90
+    autodiff_jacobian.f90
+    autodiff_jvp.f90
+)
+
+add_library(autodiff::autodiff ALIAS autodiff)
+
+set(autodiff_module_dir "${CMAKE_CURRENT_BINARY_DIR}/modules")
+if(CMAKE_CONFIGURATION_TYPES)
+    set(autodiff_module_build_include_dir "${autodiff_module_dir}/$<CONFIG>")
+    set(autodiff_module_install_source_dir "${autodiff_module_dir}/$<CONFIG>")
+else()
+    set(autodiff_module_build_include_dir "${autodiff_module_dir}")
+    set(autodiff_module_install_source_dir "${autodiff_module_dir}")
+endif()
+
+set_target_properties(autodiff PROPERTIES
+    Fortran_MODULE_DIRECTORY "${autodiff_module_dir}"
+)
+
+target_include_directories(autodiff PUBLIC
+    "$<BUILD_INTERFACE:${autodiff_module_build_include_dir}>"
+    "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/autodiff>"
+)
+
+install(
+    TARGETS autodiff
+    EXPORT autodiffTargets
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/autodiff"
+)
+
+install(
+    DIRECTORY "${autodiff_module_install_source_dir}/"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/autodiff"
+    FILES_MATCHING
+        PATTERN "*.mod"
+        PATTERN "*.smod"
+)
