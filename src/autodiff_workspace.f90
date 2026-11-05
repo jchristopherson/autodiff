@@ -8,13 +8,13 @@ module autodiff_workspace
 
     type :: workspace
         !! Allocatable temporary arrays used during automatic differentiation.
-        type(dual), allocatable :: xd(:)
+        type(dual), allocatable, dimension(:) :: xd
         !! Dual-valued input buffer.
-        type(dual), allocatable :: fd(:)
+        type(dual), allocatable, dimension(:) :: fd
         !! Dual-valued function output buffer.
-        type(dual), allocatable :: xd_pool(:,:)
+        type(dual), allocatable, dimension(:,:) :: xd_pool
         !! Per-thread dual-valued input buffers, one column per thread.
-        type(dual), allocatable :: fd_pool(:,:)
+        type(dual), allocatable, dimension(:,:) :: fd_pool
         !! Per-thread dual-valued function output buffers, one column per thread.
     contains
         procedure, public :: resize => wrk_resize

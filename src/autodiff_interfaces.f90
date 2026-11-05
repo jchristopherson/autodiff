@@ -14,7 +14,7 @@ module autodiff_interfaces
             !! the seeded directional derivative.
             use autodiff_dual_numbers, only : dual
                 !! Provides the dual-number argument and result type.
-            type(dual), intent(in) :: x(:)
+            type(dual), intent(in), dimension(:) :: x
                 !! Input values and derivative seeds; for seed vector \(v\), the
                 !! returned derivative is \(D f(x)[v] = \nabla f(x)^{T}v\).
             class(*), intent(in), optional :: args
@@ -29,7 +29,7 @@ module autodiff_interfaces
             !! its directional derivative.
             use autodiff_dual_numbers, only : dual
                 !! Provides the dual-number input and output type.
-            type(dual), intent(in) :: x(:)
+            type(dual), intent(in), dimension(:) :: x
                 !! Input values and derivative seeds; for seed vector \(v\), 
                 !! outputs propagate the direction \(v\).
             type(dual), intent(out), dimension(:) :: f
