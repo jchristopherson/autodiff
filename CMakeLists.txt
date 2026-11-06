@@ -16,6 +16,15 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(CTest)
 
+option(AUTODIFF_ENABLE_OPENMP "Evaluate Jacobian columns in parallel with OpenMP when available" ON)
+set(AUTODIFF_CONFIG_NEEDS_OPENMP FALSE)
+if(AUTODIFF_ENABLE_OPENMP)
+    find_package(OpenMP COMPONENTS Fortran)
+    if(OpenMP_Fortran_FOUND)
+        set(AUTODIFF_CONFIG_NEEDS_OPENMP TRUE)
+    endif()
+endif()
+
 add_subdirectory(src)
 
 if(BUILD_TESTING)

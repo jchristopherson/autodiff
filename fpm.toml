@@ -8,3 +8,21 @@ copyright = "Copyright 2026, Jason Christopherson"
 
 [library]
 source-dir = "src"
+
+[dependencies]
+openmp = "*"
+
+[[test]]
+name = "test_autodiff"
+source-dir = "test"
+main = "test_autodiff.f90"
+
+[[test]]
+name = "test_differentiation"
+source-dir = "test"
+main = "test_differentiation.f90"
+
+[[test]]
+name = "test_dual_operations"
+source-dir = "test"
+main = "test_dual_operations.f90"

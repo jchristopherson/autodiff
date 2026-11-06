@@ -21,11 +21,7 @@ if(AUTODIFF_ENABLE_IPO)
     endif()
 endif()
 
-option(AUTODIFF_ENABLE_OPENMP "Evaluate Jacobian columns in parallel with OpenMP when available" ON)
 if(AUTODIFF_ENABLE_OPENMP)
-    # FindOpenMP selects the correct flag for each Fortran compiler
-    # (e.g. -fopenmp for gfortran/ifx, -qopenmp for ifort, -mp for nvfortran).
-    find_package(OpenMP COMPONENTS Fortran)
     if(OpenMP_Fortran_FOUND)
         target_link_libraries(autodiff PUBLIC OpenMP::OpenMP_Fortran)
     else()

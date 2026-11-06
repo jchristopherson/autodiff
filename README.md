@@ -46,3 +46,14 @@ Build the library with [fpm](https://github.com/fortran-lang/fpm):
 fpm build
 fpm test
 ```
+
+OpenMP support is opt-in with fpm. Enable it when building and testing with a
+supported compiler:
+
+```sh
+fpm build --features openmp
+fpm test --features openmp
+```
+
+The `openmp` feature supplies compiler and link flags for GNU Fortran, Intel
+Fortran, and NVIDIA Fortran. Without the feature, fpm builds remain serial.
