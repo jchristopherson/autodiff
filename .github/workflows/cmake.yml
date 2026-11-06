@@ -146,4 +146,4 @@ jobs:
           cmake --build consumer/build
         env:
           FC: ${{ steps.setup-fortran.outputs.fc }}
-          CC: ${{ steps.setup-fortran.outputs.cc }
+          CC: ${{ steps.setup-fortran.outputs.cc }}
