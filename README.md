@@ -35,7 +35,7 @@ find_package(autodiff CONFIG REQUIRED)
 target_link_libraries(my_target PRIVATE autodiff::autodiff)
 ```
 
-Include `autodiff_dual_numbers` in Fortran source to use the `real_ad` type
+Include `autodiff` in Fortran source to use the `dual` type
 and its overloaded operators and intrinsic functions.
 
 ## Building with fpm
@@ -46,14 +46,3 @@ Build the library with [fpm](https://github.com/fortran-lang/fpm):
 fpm build
 fpm test
 ```
-
-OpenMP support is opt-in with fpm. Enable it when building and testing with a
-supported compiler:
-
-```sh
-fpm build --features openmp
-fpm test --features openmp
-```
-
-The `openmp` feature supplies compiler and link flags for GNU Fortran, Intel
-Fortran, and NVIDIA Fortran. Without the feature, fpm builds remain serial.
