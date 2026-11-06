@@ -1,2 +1,5 @@
 add_executable(autodiff_jacobian_example autodiff_jacobian_example.f90)
 target_link_libraries(autodiff_jacobian_example autodiff)
+
+add_executable(autodiff_gradient_example autodiff_gradient_example.f90)
+target_link_libraries(autodiff_gradient_example autodiff)

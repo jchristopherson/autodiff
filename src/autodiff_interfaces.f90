@@ -1,7 +1,6 @@
 module autodiff_interfaces
     !! Abstract procedure interfaces used by the forward-mode differentiation routines.
     use iso_fortran_env
-    use autodiff_dual_numbers
     implicit none
     private
     public :: scalar_function
