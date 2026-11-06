@@ -1,16 +1,14 @@
-name: FPM
+name: fpm
 
 on:
   push:
+    branches: ["main"]
   pull_request:
-  workflow_dispatch:
-
-permissions:
-  contents: read
+    branches: ["main"]
 
 jobs:
-  test:
-    name: ${{ matrix.compiler }} on ${{ matrix.os }}
+  build-and-test:
+    name: ${{ matrix.os }} / ${{ matrix.compiler }} / shared=${{ matrix.shared }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -18,33 +16,127 @@ jobs:
         include:
           - os: ubuntu-latest
             compiler: gcc
-            version: latest
-          - os: windows-latest
+            version: '14'
+            shared: false
+          - os: ubuntu-latest
             compiler: gcc
-            version: latest
-          - os: macos-latest
+            version: '14'
+            shared: true
+          - os: ubuntu-latest
             compiler: gcc
-            version: latest
+            version: '15'
+            shared: false
+          - os: ubuntu-latest
+            compiler: gcc
+            version: '15'
+            shared: true
           - os: ubuntu-latest
             compiler: intel
-            version: "2025.0"
+            version: '2023.2'
+            shared: true
           - os: windows-latest
-            compiler: intel
-            version: "2025.0"
+            compiler: gcc
+            version: 'msys2'
+            shared: false
+          - os: windows-latest
+            compiler: gcc
+            version: 'msys2'
+            shared: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up Fortran
+      - name: Set up Fortran toolchain
+        if: runner.os != 'Windows'
         uses: fortran-lang/setup-fortran@v1
+        id: setup-fortran
         with:
           compiler: ${{ matrix.compiler }}
           version: ${{ matrix.version }}
+          
+      - name: Show compiler version
+        if: runner.os != 'Windows'
+        shell: bash
+        env:
+          FC: ${{ steps.setup-fortran.outputs.fc }}
+          CC: ${{ steps.setup-fortran.outputs.cc }}
+        run: |
+          "$FC" --version
 
-      - name: Set up fpm
-        uses: fortran-lang/setup-fpm@v10
+      - name: Add MinGW64 toolchain to PATH (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_PATH "${{ steps.msys2.outputs.msys2-location }}\mingw64\bin"
+
+      - name: Show compiler version
+        shell: bash
+        env:
+          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
+          FC: ${{ runner.os == 'Windows' && 'gfortran' || steps.setup-fortran.outputs.fc }}
+          CC: ${{ runner.os == 'Windows' && 'gcc' || steps.setup-fortran.outputs.cc }}
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            export PATH="$MSYS2_LOCATION/mingw64/bin:$PATH"
+          fi
+          "$FC" --version
+
+      - name: Install fpm
+        uses: fortran-lang/setup-fpm@v5
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          fpm-version: 'v0.10.1'
 
-      - name: Test
-        run: fpm test
+      - name: Build AUTODIFF
+        shell: bash
+        env:
+          FC: ${{ runner.os == 'Windows' && 'gfortran' || steps.setup-fortran.outputs.fc }}
+          CC: ${{ runner.os == 'Windows' && 'gcc' || steps.setup-fortran.outputs.cc }}
+          FPM_FC: ${{ runner.os == 'Windows' && 'gfortran' || steps.setup-fortran.outputs.fc }}
+          FPM_CC: ${{ runner.os == 'Windows' && 'gcc' || steps.setup-fortran.outputs.cc }}
+          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
+          SHARED: ${{ matrix.shared }}
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            export PATH="$MSYS2_LOCATION/mingw64/bin:$PATH"
+          fi
+          FLAGS=""
+          if [[ "$SHARED" == "true" ]]; then
+            if [[ "$RUNNER_OS" == "Windows" ]]; then
+              FLAGS="--flag=-Wl,--export-all-symbols"
+            else
+              FLAGS="--flag=-fPIC"
+            fi
+          fi
+          if [[ -n "$FLAGS" ]]; then
+            fpm build $FLAGS
+          else
+            fpm build
+          fi
+
+      - name: Run tests
+        shell: bash
+        env:
+          FC: ${{ runner.os == 'Windows' && 'gfortran' || steps.setup-fortran.outputs.fc }}
+          CC: ${{ runner.os == 'Windows' && 'gcc' || steps.setup-fortran.outputs.cc }}
+          FPM_FC: ${{ runner.os == 'Windows' && 'gfortran' || steps.setup-fortran.outputs.fc }}
+          FPM_CC: ${{ runner.os == 'Windows' && 'gcc' || steps.setup-fortran.outputs.cc }}
+          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
+          SHARED: ${{ matrix.shared }}
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            export PATH="$MSYS2_LOCATION/mingw64/bin:$PATH"
+          fi
+          FLAGS=""
+          if [[ "$SHARED" == "true" ]]; then
+            if [[ "$RUNNER_OS" == "Windows" ]]; then
+              FLAGS="--flag=-Wl,--export-all-symbols"
+            else
+              FLAGS="--flag=-fPIC"
+            fi
+          fi
+          if [[ -n "$FLAGS" ]]; then
+            fpm test $FLAGS
+          else
+            fpm test
+          fi

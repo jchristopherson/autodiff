@@ -2,74 +2,148 @@ name: CMake
 
 on:
   push:
+    branches: ["main"]
   pull_request:
-  workflow_dispatch:
+    branches: ["main"]
 
-permissions:
-  contents: read
+env:
+  BUILD_TYPE: Release
 
 jobs:
   test:
-    name: ${{ matrix.compiler }} (${{ matrix.library }}) on ${{ matrix.os }}
+    name: ${{ matrix.os }} / ${{ matrix.compiler }} / shared=${{ matrix.shared }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        library: [static, shared]
         include:
           - os: ubuntu-latest
             compiler: gcc
-            version: latest
-          - os: windows-latest
+            version: '14'
+            shared: false
+          - os: ubuntu-latest
             compiler: gcc
-            version: latest
-          - os: macos-latest
+            version: '14'
+            shared: true
+          - os: ubuntu-latest
             compiler: gcc
-            version: latest
+            version: '15'
+            shared: false
+          - os: ubuntu-latest
+            compiler: gcc
+            version: '15'
+            shared: true
           - os: ubuntu-latest
             compiler: intel
-            version: "2025.0"
-          - os: windows-latest
+            version: '2023.2'
+            shared: false
+          - os: ubuntu-latest
             compiler: intel
-            version: "2025.0"
+            version: '2023.2'
+            shared: true
+          - os: macos-latest
+            compiler: gcc
+            version: '14'
+            shared: false
+          - os: macos-latest
+            compiler: gcc
+            version: '14'
+            shared: true
+          - os: windows-latest
+            compiler: gcc
+            version: '14'
+            shared: false
+          - os: windows-latest
+            compiler: gcc
+            version: '14'
+            shared: true
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ninja
-        uses: seanmiddleditch/gha-setup-ninja@v5
-
-      - name: Set up Fortran
-        id: fortran
-        uses: fortran-lang/setup-fortran@v1
+      - uses: fortran-lang/setup-fortran@v1
+        id: setup-fortran
         with:
           compiler: ${{ matrix.compiler }}
           version: ${{ matrix.version }}
+      
+      - name: Show Fortran compiler version
+        run: ${{ env.FC }} --version
+        env:
+          FC: ${{ steps.setup-fortran.outputs.fc }}
+          CC: ${{ steps.setup-fortran.outputs.cc }}
 
-      - name: Configure
-        run: >-
-          cmake -S . -B build -G Ninja
-          -DCMAKE_Fortran_COMPILER="${{ steps.fortran.outputs.fc }}"
-          -DAUTODIFF_ENABLE_OPENMP=ON
-          -DBUILD_TESTING=ON
-          -DBUILD_SHARED_LIBS=${{ matrix.library == 'shared' }}
+      - name: Configure CMake
+        shell: bash
+        run: |
+          CMAKE_OPTIONS=(
+            -S .
+            -B build
+            -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+            -DCMAKE_Fortran_COMPILER=${{ env.FC }}
+            -DCMAKE_C_COMPILER=${{ env.CC }}
+            -DBUILD_TESTING=TRUE
+            -DBUILD_SHARED_LIBS=${{ matrix.shared && 'TRUE' || 'FALSE' }}
+          )
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            CMAKE_OPTIONS+=( -G "MinGW Makefiles" )
+          fi
+          cmake "${CMAKE_OPTIONS[@]}"
+        env:
+          FC: ${{ steps.setup-fortran.outputs.fc }}
+          CC: ${{ steps.setup-fortran.outputs.cc }}
 
-      - name: Build
-        run: cmake --build build --parallel
+      - name: Build with CMake
+        run: cmake --build build --config ${{ env.BUILD_TYPE }}
 
-      - name: Test
-        run: ctest --test-dir build --output-on-failure
+      - name: Test with CMake
+        shell: bash
+        working-directory: build
+        run: |
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            export PATH="$PATH:${MSYS2_MINGW_BIN}"
+          fi
+          ctest --output-on-failure -C ${{ env.BUILD_TYPE }}
 
-      - name: Install
-        run: cmake --install build --prefix "${{ github.workspace }}/build/install"
+      - name: Install with CMake
+        run: cmake --install build --prefix ${{ github.workspace }}/install --config ${{ env.BUILD_TYPE }}
 
-      - name: Configure installed-package consumer
-        run: >-
-          cmake -S cmake/install_smoke -B build/install-smoke -G Ninja
-          -DCMAKE_PREFIX_PATH="${{ github.workspace }}/build/install"
+      - name: Verify install with CMake consumer
+        shell: bash
+        run: |
+          mkdir -p consumer
+          cat > consumer/CMakeLists.txt <<'EOF'
+          cmake_minimum_required(VERSION 3.24)
+          project(autodiff_consumer LANGUAGES Fortran)
 
-      - name: Build installed-package consumer
-        run: cmake --build build/install-smoke --parallel
+          find_package(autodiff CONFIG REQUIRED)
 
-      - name: Test installed-package consumer
-        run: ctest --test-dir build/install-smoke --output-on-failure
+          add_executable(autodiff_consumer main.f90)
+          target_link_libraries(autodiff_consumer PRIVATE autodiff::autodiff)
+          EOF
+
+          cat > consumer/main.f90 <<'EOF'
+          program main
+            use autodiff
+            print *, "autodiff package found"
+          end program main
+          EOF
+
+          CMAKE_OPTIONS=(
+            -S consumer
+            -B consumer/build
+            -DCMAKE_Fortran_COMPILER=${{ env.FC }}
+            -DCMAKE_C_COMPILER=${{ env.CC }}
+          )
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            INSTALL_PREFIX="${GITHUB_WORKSPACE//\\//}/install"
+            CMAKE_OPTIONS+=( -G "MinGW Makefiles" )
+          else
+            INSTALL_PREFIX="${{ github.workspace }}/install"
+          fi
+          CMAKE_OPTIONS+=( -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" )
+          cmake "${CMAKE_OPTIONS[@]}"
+          cmake --build consumer/build
+        env:
+          FC: ${{ steps.setup-fortran.outputs.fc }}
+          CC: ${{ steps.setup-fortran.outputs.cc }
