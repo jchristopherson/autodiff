@@ -10,11 +10,12 @@ permissions:
 
 jobs:
   test:
-    name: ${{ matrix.compiler }} on ${{ matrix.os }}
+    name: ${{ matrix.compiler }} (${{ matrix.library }}) on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        library: [static, shared]
         include:
           - os: ubuntu-latest
             compiler: gcc
@@ -51,6 +52,7 @@ jobs:
           -DCMAKE_Fortran_COMPILER="${{ steps.fortran.outputs.fc }}"
           -DAUTODIFF_ENABLE_OPENMP=ON
           -DBUILD_TESTING=ON
+          -DBUILD_SHARED_LIBS=${{ matrix.library == 'shared' }}
 
       - name: Build
         run: cmake --build build --parallel
