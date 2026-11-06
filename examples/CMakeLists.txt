@@ -1,0 +1,2 @@
+add_executable(autodiff_jacobian_example autodiff_jacobian_example.f90)
+target_link_libraries(autodiff_jacobian_example autodiff)

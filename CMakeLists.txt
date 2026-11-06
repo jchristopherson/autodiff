@@ -32,6 +32,11 @@ if(BUILD_TESTING)
     add_subdirectory(test)
 endif()
 
+option(BUILD_AUTODIFF_EXAMPLES "Build AUTODIFF examples.")
+if (BUILD_AUTODIFF_EXAMPLES)
+    add_subdirectory(examples)
+endif()
+
 set(autodiff_cmake_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/autodiff")
 
 configure_package_config_file(

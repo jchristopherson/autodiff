@@ -17,7 +17,7 @@ contains
         !! case, the user procedure must be thread-safe and must not modify
         !! shared state through 'args' without synchronization.
 !$ use omp_lib, only : omp_get_thread_num
-        procedure(vector_function), pointer, intent(in) :: fcn
+        procedure(vector_function) :: fcn
             !! User procedure that evaluates the vector-valued function.
         real(real64), intent(in), dimension(:) :: x
             !! Input point at which the Jacobian is evaluated.
