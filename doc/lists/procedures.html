@@ -1,0 +1,353 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="DIFFEQ is a Fortran automatic differentiation library.">
+    <meta name="author" content="Jason Christopherson" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>All Procedures &ndash; AUTODIFF
+</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">AUTODIFF </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12" id='text'>
+			 <h1>Procedures</h1>
+			 <table class="table table-striped">
+			 <thead><tr><th>Procedure</th><th>Location</th><th>Procedure Type</th><th>Description</th></tr></thead>
+			 <tbody>
+			   <tr>
+                 <td><a href='..\interface\abs.html'>abs</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Absolute value; the derivative at zero is defined to be zero.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\acos.html'>acos</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Inverse cosine in radians; the active derivative is singular at +/-1.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\acosh.html'>acosh</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Inverse hyperbolic cosine for values &gt;= 1; active derivative singular at 1.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\asin.html'>asin</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Inverse sine in radians; the active derivative is singular at +/-1.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\asinh.html'>asinh</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Inverse hyperbolic sine.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\assignment(=).html'>assignment(=)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Copy AD data, assign a constant (clearing dx), or extract a real value.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\atan.html'>atan</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>One- or two-argument inverse tangent in radians.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\atan2.html'>atan2</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Quadrant-aware inverse tangent ATAN2(y,x); not defined at the origin.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\atanh.html'>atanh</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Inverse hyperbolic tangent for values strictly between -1 and 1.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\cos.html'>cos</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Cosine, with arguments in radians.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\cosh.html'>cosh</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Hyperbolic cosine.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\erf.html'>erf</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Error function.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\erfc.html'>erfc</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Complementary error function.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\exp.html'>exp</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Natural exponential.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\proc\gradient.html'>gradient</a></td>
+                 <td><a href='..\module\autodiff_gradient.html'>autodiff_gradient</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Compute a scalar function's gradient by seeding one input direction 
+at a time.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\proc\jacobian.html'>jacobian</a></td>
+                 <td><a href='..\module\autodiff_jacobian.html'>autodiff_jacobian</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Compute a vector function's Jacobian by seeding each input basis 
+direction.</p><a href="../proc/jacobian.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\proc\jvp.html'>jvp</a></td>
+                 <td><a href='..\module\autodiff_jvp.html'>autodiff_jvp</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Evaluate the directional derivative of a vector function without 
+forming its Jacobian.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\log.html'>log</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Natural logarithm for positive values.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\log10.html'>log10</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Base-ten logarithm for positive values.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\max.html'>max</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Binary maximum, carrying the selected derivative; first argument wins ties.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\min.html'>min</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Binary minimum, carrying the selected derivative; first argument wins ties.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(ASTERISK).html'>operator(*)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Multiplication using the product rule.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(ASTERISKASTERISK).html'>operator(**)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Exponentiation with constant or variable base/exponent.
+Variable exponents require a positive base, except that a zero constant
+base with a positive exponent has zero derivative. Constant integral
+exponents also support negative bases.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(+).html'>operator(+)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Unary identity and addition, including constant operands in either order.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(-).html'>operator(-)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Unary negation and subtraction, including constant operands.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(SLASH).html'>operator(/)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Division using the quotient rule; the denominator must be nonzero.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(SLASH=).html'>operator(/=)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Inequality of values, independent of derivative seeds.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(lt).html'>operator(<)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Strict less-than comparison of values.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(lt=).html'>operator(<=)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Less-than-or-equal comparison of values.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(==).html'>operator(==)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Equality of values, independent of derivative seeds.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(gt).html'>operator(>)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Strict greater-than comparison of values.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\operator(gt=).html'>operator(>=)</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Greater-than-or-equal comparison of values.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\sign.html'>sign</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Magnitude of a with the sign of b; ignores the derivative of b.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\sin.html'>sin</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Sine, with arguments in radians.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\sinh.html'>sinh</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Hyperbolic sine.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\sqrt.html'>sqrt</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Square root for nonnegative values; its active derivative is singular at zero.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\tan.html'>tan</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Tangent, with arguments in radians and away from its poles.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='..\interface\tanh.html'>tanh</a></td>
+                 <td><a href='..\module\autodiff_dual_numbers.html'>autodiff_dual_numbers</a></td>
+                 <td>Interface</td>
+                 <td><p>Hyperbolic tangent.</p></td>
+               </tr>
+			 </tbody></table>
+             
+        </div>
+      </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col"><p>AUTODIFF was developed by Jason Christopherson<br>&copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06 05:27              </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>
