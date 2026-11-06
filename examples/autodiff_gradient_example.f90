@@ -31,12 +31,12 @@ program example
     print "(A)", new_line('a') // "DIFFERENCES:"
     print "(E0.3)", (delta(i), i = 1, size(delta))
 contains
-function sclr_fcn(u, args) result(f)
-    ! Rosenbrock's Function:
-    ! f(x,y) = (1 - x)**2 + 100 * (y - x**2)**2
-    type(dual), intent(in), dimension(:) :: u
-    class(*), intent(in), optional :: args
-    type(dual) :: f
-    f = (1.0d0 - u(1))**2 + 1.0d2 * (u(2) - u(1)**2)**2
-end function
+    function sclr_fcn(u, args) result(f)
+        ! Rosenbrock's Function:
+        ! f(x,y) = (1 - x)**2 + 100 * (y - x**2)**2
+        type(dual), intent(in), dimension(:) :: u
+        class(*), intent(in), optional :: args
+        type(dual) :: f
+        f = (1.0d0 - u(1))**2 + 1.0d2 * (u(2) - u(1)**2)**2
+    end function
 end program
