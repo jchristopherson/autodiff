@@ -85,9 +85,6 @@ jobs:
             -DBUILD_TESTING=TRUE
             -DBUILD_SHARED_LIBS=${{ matrix.shared && 'TRUE' || 'FALSE' }}
           )
-          if [ "${{ matrix.compiler }}" = "intel" ]; then
-            CMAKE_OPTIONS+=( -DAUTODIFF_ENABLE_OPENMP=FALSE )
-          fi
           if [ "${{ runner.os }}" = "Windows" ]; then
             CMAKE_OPTIONS+=( -G "MinGW Makefiles" )
           fi

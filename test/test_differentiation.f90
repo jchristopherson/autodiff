@@ -1,16 +1,43 @@
+module differentiation_test_support
+    use autodiff_dual_numbers, only: dual, cos, operator(+), operator(*)
+    implicit none
+
+    type :: call_counter
+        integer, pointer :: calls => null()
+    end type
+
+contains
+
+    subroutine vector_test_function(xd, y, args)
+        type(dual), intent(in) :: xd(:)
+        type(dual), intent(out) :: y(:)
+        class(*), intent(in), optional :: args
+
+        if (present(args)) then
+            select type (args)
+            type is (call_counter)
+                !$omp atomic
+                args%calls = args%calls + 1
+            class default
+                error stop "Unexpected vector-function context type."
+            end select
+        end if
+        y(1) = xd(1) * xd(2)
+        y(2) = xd(1) + cos(xd(2))
+    end subroutine
+
+end module
+
 program test_differentiation
     use iso_fortran_env, only: real64, error_unit, output_unit
     use autodiff_dual_numbers, only: dual, operator(+), operator(*), operator(**), sin, cos
+    use differentiation_test_support, only: call_counter, vector_test_function
     use autodiff_gradient, only: gradient
     use autodiff_jacobian, only: jacobian
     use autodiff_jvp, only: jvp
     use autodiff_interfaces, only: scalar_function, vector_function
     use autodiff_workspace, only: workspace
     implicit none
-
-    type :: call_counter
-        integer, pointer :: calls => null()
-    end type
 
     integer, target :: total_calls
     type(call_counter) :: counter
@@ -168,24 +195,6 @@ contains
         end if
         y = xd(1)**2 * xd(2) + sin(xd(2))
     end function
-
-    subroutine vector_test_function(xd, y, args)
-        type(dual), intent(in) :: xd(:)
-        type(dual), intent(out) :: y(:)
-        class(*), intent(in), optional :: args
-
-        if (present(args)) then
-            select type (args)
-            type is (call_counter)
-                !$omp atomic
-                args%calls = args%calls + 1
-            class default
-                error stop "Unexpected vector-function context type."
-            end select
-        end if
-        y(1) = xd(1) * xd(2)
-        y(2) = xd(1) + cos(xd(2))
-    end subroutine
 
     subroutine check_close(name, actual, expected)
         character(len=*), intent(in) :: name
