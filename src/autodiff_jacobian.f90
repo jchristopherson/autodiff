@@ -5,6 +5,8 @@ module autodiff_jacobian
     use autodiff_interfaces
     use autodiff_workspace
     implicit none
+    private
+    public :: jacobian
 
 contains
 
@@ -16,7 +18,6 @@ contains
         !! OpenMP, the Jacobian columns are evaluated in parallel.  In this
         !! case, the user procedure must be thread-safe and must not modify
         !! shared state through 'args' without synchronization.
-!$ use omp_lib, only : omp_get_thread_num
         procedure(vector_function) :: fcn
             !! User procedure that evaluates the vector-valued function.
         real(real64), intent(in), dimension(:) :: x
@@ -36,7 +37,7 @@ contains
 
         type(dual), allocatable, target, dimension(:,:) :: x_buffer, f_buffer
         type(dual), pointer, dimension(:,:) :: xd, fd
-        integer :: i, k, m, n, nt, tid
+        integer :: n, m, nt
 
         n = size(x)
         m = size(J,1)
@@ -52,6 +53,71 @@ contains
             xd => x_buffer
             fd => f_buffer
         end if
+
+        if (nt > 1) then
+            call jacobian_parallel(fcn, x, J, xd, fd, args)
+        else
+            call jacobian_serial(fcn, x, J, xd, fd, args)
+        end if
+
+    end subroutine
+
+    subroutine jacobian_serial(fcn, x, J, xd, fd, args)
+        !! Serial Jacobian evaluation using the first column of the buffers.
+        procedure(vector_function) :: fcn
+            !! User procedure that evaluates the vector-valued function.
+        real(real64), intent(in), dimension(:) :: x
+            !! Input point at which the Jacobian is evaluated.
+        real(real64), intent(out), dimension(:,:) :: J
+            !! Jacobian output with shape (number of outputs, number of inputs).
+        type(dual), intent(inout), dimension(:,:) :: xd, fd
+            !! Input and output buffers; only the first column is used.
+        class(*), intent(in), optional :: args
+            !! Optional caller-owned context passed to the procedure.
+
+        integer :: i, k, m, n
+
+        n = size(x)
+        m = size(J,1)
+
+        do i = 1, n
+            xd(i,1)%x = x(i)
+            xd(i,1)%dx = 0.0d0
+        end do
+
+        do k = 1, n
+            xd(k,1)%dx = 1.0d0
+
+            call fcn(xd(:,1), fd(:,1), args = args)
+
+            do i = 1, m
+                J(i,k) = fd(i,1)%dx
+            end do
+
+            xd(k,1)%dx = 0.0d0
+        end do
+
+    end subroutine
+
+    subroutine jacobian_parallel(fcn, x, J, xd, fd, args)
+        !! OpenMP Jacobian evaluation; each thread owns one column of the buffers.
+!$ use omp_lib, only : omp_get_thread_num
+        procedure(vector_function) :: fcn
+            !! User procedure that evaluates the vector-valued function.
+        real(real64), intent(in), dimension(:) :: x
+            !! Input point at which the Jacobian is evaluated.
+        real(real64), intent(out), dimension(:,:) :: J
+            !! Jacobian output with shape (number of outputs, number of inputs).
+        type(dual), intent(inout), dimension(:,:) :: xd, fd
+            !! Per-thread input and output buffers, one column per thread.
+        class(*), intent(in), optional :: args
+            !! Optional caller-owned context passed to the procedure.
+
+        integer :: i, k, m, n, nt, tid
+
+        n = size(x)
+        m = size(J,1)
+        nt = size(xd, 2)
 
 !$omp parallel num_threads(nt) default(shared) private(i, k, tid)
         tid = 1
@@ -80,6 +146,5 @@ contains
 !$omp end parallel
 
     end subroutine
-
 
 end module
