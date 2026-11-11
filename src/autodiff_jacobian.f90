@@ -55,9 +55,17 @@ contains
         end if
 
         if (nt > 1) then
-            call jacobian_parallel(fcn, x, J, xd, fd, args)
+            if (present(args)) then
+                call jacobian_parallel(fcn, x, J, xd, fd, args)
+            else
+                call jacobian_parallel(fcn, x, J, xd, fd)
+            end if
         else
-            call jacobian_serial(fcn, x, J, xd, fd, args)
+            if (present(args)) then
+                call jacobian_serial(fcn, x, J, xd, fd, args)
+            else
+                call jacobian_serial(fcn, x, J, xd, fd)
+            end if
         end if
 
     end subroutine
@@ -88,7 +96,11 @@ contains
         do k = 1, n
             xd(k,1)%dx = 1.0d0
 
-            call fcn(xd(:,1), fd(:,1), args = args)
+            if (present(args)) then
+                call fcn(xd(:,1), fd(:,1), args = args)
+            else
+                call fcn(xd(:,1), fd(:,1))
+            end if
 
             do i = 1, m
                 J(i,k) = fd(i,1)%dx
