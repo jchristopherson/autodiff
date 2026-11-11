@@ -37,11 +37,13 @@ contains
         type(dual), allocatable, target, dimension(:,:) :: x_buffer, f_buffer
         type(dual), pointer, dimension(:,:) :: xd, fd
         integer :: i, k, m, n, nt, tid
+        logical :: has_args
 
         n = size(x)
         m = size(J,1)
         nt = 1
         if (present(nthreads)) nt = max(1, nthreads)
+        has_args = present(args)
 
         if (present(work)) then
             if (.not.work%validate_size(n, m, nt)) call work%resize(n, m, nt)
@@ -68,7 +70,7 @@ contains
         do k = 1, n
             xd(k,tid)%dx = 1.0d0
 
-            if (present(args)) then
+            if (has_args) then
                 call fcn(xd(:,tid), fd(:,tid), args = args)
             else
                 call fcn(xd(:,tid), fd(:,tid))
