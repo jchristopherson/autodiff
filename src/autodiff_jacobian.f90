@@ -49,7 +49,7 @@ contains
                 call jacobian_parallel(fcn, x, J, work%xd_pool(:, 1:nt), &
                     work%fd_pool(:, 1:nt), args = args)
             else
-                call jacobian_serial(fcn, x, J, work%xd_pool(:, 1:nt), &
+                call jacobian_parallel(fcn, x, J, work%xd_pool(:, 1:nt), &
                     work%fd_pool(:, 1:nt), args = args)
             end if
         else
@@ -57,7 +57,7 @@ contains
             if (nt > 1) then
                 call jacobian_parallel(fcn, x, J, x_buffer, f_buffer, args = args)
             else
-                call jacobian_serial(fcn, x, J, x_buffer, f_buffer, args = args)
+                call jacobian_parallel(fcn, x, J, x_buffer, f_buffer, args = args)
             end if
         end if
 
