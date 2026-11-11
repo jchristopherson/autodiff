@@ -44,21 +44,21 @@ contains
         nt = 1
         if (present(nthreads)) nt = max(1, nthreads)
 
-        if (present(work)) then
-            if (.not.work%validate_size(n, m, nt)) call work%resize(n, m, nt)
-            xd => work%xd_pool(1:n, 1:nt)
-            fd => work%fd_pool(1:m, 1:nt)
-        else
+        ! if (present(work)) then
+        !     if (.not.work%validate_size(n, m, nt)) call work%resize(n, m, nt)
+        !     xd => work%xd_pool(1:n, 1:nt)
+        !     fd => work%fd_pool(1:m, 1:nt)
+        ! else
             allocate(x_buffer(n, nt), f_buffer(m, nt))
             xd => x_buffer
             fd => f_buffer
-        end if
-
-        ! if (nt > 1) then
-            call jacobian_parallel(fcn, x, J, xd, fd, args = args)
-        ! else
-        !     call jacobian_serial(fcn, x, J, xd, fd, args = args)
         ! end if
+
+        if (nt > 1) then
+            call jacobian_parallel(fcn, x, J, xd, fd, args = args)
+        else
+            call jacobian_serial(fcn, x, J, xd, fd, args = args)
+        end if
 
     end subroutine
 
