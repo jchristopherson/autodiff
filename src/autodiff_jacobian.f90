@@ -53,31 +53,55 @@ contains
             fd => f_buffer
         end if
 
-!$omp parallel num_threads(nt) default(shared) private(i, k, tid)
-        tid = 1
-!$      tid = omp_get_thread_num() + 1
+        if (nt == 1) then
+            ! Run serial, but do not engage with OpenMP
 
-        ! Each thread owns one column of the buffers.  Inputs are set once
-        ! per thread, and only the seeded direction is toggled per column.
-        do i = 1, n
-            xd(i,tid)%x = x(i)
-            xd(i,tid)%dx = 0.0d0
-        end do
-
-!$omp do schedule(static)
-        do k = 1, n
-            xd(k,tid)%dx = 1.0d0
-
-            call fcn(xd(:,tid), fd(:,tid), args = args)
-
-            do i = 1, m
-                J(i,k) = fd(i,tid)%dx
+            ! Each thread owns one column of the buffers.  Inputs are set once
+            ! per thread, and only the seeded direction is toggled per column.
+            do i = 1, n
+                xd(i,1)%x = x(i)
+                xd(i,1)%dx = 0.0d0
             end do
 
-            xd(k,tid)%dx = 0.0d0
-        end do
-!$omp end do
-!$omp end parallel
+            do k = 1, n
+                xd(k,1)%dx = 1.0d0
+
+                call fcn(xd(:,1), fd(:,1), args = args)
+
+                do i = 1, m
+                    J(i,k) = fd(i,1)%dx
+                end do
+
+                xd(k,1)%dx = 0.0d0
+            end do
+        else
+            ! Utilize OpenMP
+        !$omp parallel num_threads(nt) default(shared) private(i, k, tid)
+            tid = 1
+        !$      tid = omp_get_thread_num() + 1
+
+            ! Each thread owns one column of the buffers.  Inputs are set once
+            ! per thread, and only the seeded direction is toggled per column.
+            do i = 1, n
+                xd(i,tid)%x = x(i)
+                xd(i,tid)%dx = 0.0d0
+            end do
+
+        !$omp do schedule(static)
+            do k = 1, n
+                xd(k,tid)%dx = 1.0d0
+
+                call fcn(xd(:,tid), fd(:,tid), args = args)
+
+                do i = 1, m
+                    J(i,k) = fd(i,tid)%dx
+                end do
+
+                xd(k,tid)%dx = 0.0d0
+            end do
+        !$omp end do
+        !$omp end parallel
+    end if
 
     end subroutine
 

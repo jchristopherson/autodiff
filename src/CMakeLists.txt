@@ -28,9 +28,18 @@ if(AUTODIFF_ENABLE_IPO)
 endif()
 
 if(AUTODIFF_ENABLE_OPENMP)
-    if(OpenMP_Fortran_FOUND)
-        target_link_libraries(autodiff PUBLIC OpenMP::OpenMP_Fortran)
-        target_link_options(autodiff PUBLIC "${OpenMP_Fortran_FLAGS}")
+    target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_Fortran)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE USEOPENMP=1)
+
+    if (CMAKE_Fortran_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+        target_compile_options(${PROJECT_NAME} PUBLIC $<$<COMPILE_LANGUAGE:Fortran>:-fopenmp>)
+        target_link_options(${PROJECT_NAME} PUBLIC $<$<LINK_LANGUAGE:Fortran>:-fopenmp>)
+    elseif (CMAKE_Fortran_COMPILER_ID MATCHES "Intel|IntelLLVM")
+        target_compile_options(${PROJECT_NAME} PUBLIC $<$<COMPILE_LANGUAGE:Fortran>:-qopenmp>)
+        target_link_options(${PROJECT_NAME} PUBLIC $<$<LINK_LANGUAGE:Fortran>:-qopenmp>)
+    elseif (MSVC)
+        target_compile_options(${PROJECT_NAME} PUBLIC $<$<COMPILE_LANGUAGE:Fortran>:/openmp>)
+        target_link_options(${PROJECT_NAME} PUBLIC $<$<LINK_LANGUAGE:Fortran>:/openmp>)
     else()
         message(STATUS "OpenMP Fortran support not found; Jacobian columns will be evaluated serially.")
     endif()
@@ -47,6 +56,8 @@ endif()
 
 set_target_properties(autodiff PROPERTIES
     Fortran_MODULE_DIRECTORY "${autodiff_module_dir}"
+    POSITION_INDEPENDENT_CODE ON
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
 )
 
 target_include_directories(autodiff PUBLIC
