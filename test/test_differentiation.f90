@@ -160,8 +160,9 @@ contains
         if (present(args)) then
             select type (args)
             type is (call_counter)
-                !$omp atomic
+                !$omp critical (call_counter_update)
                 args%calls = args%calls + 1
+                !$omp end critical (call_counter_update)
             class default
                 error stop "Unexpected scalar-function context type."
             end select
@@ -177,8 +178,9 @@ contains
         if (present(args)) then
             select type (args)
             type is (call_counter)
-                !$omp atomic
+                !$omp critical (call_counter_update)
                 args%calls = args%calls + 1
+                !$omp end critical (call_counter_update)
             class default
                 error stop "Unexpected vector-function context type."
             end select

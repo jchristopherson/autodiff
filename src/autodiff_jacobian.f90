@@ -68,7 +68,11 @@ contains
         do k = 1, n
             xd(k,tid)%dx = 1.0d0
 
-            call fcn(xd(:,tid), fd(:,tid), args = args)
+            if (present(args)) then
+                call fcn(xd(:,tid), fd(:,tid), args = args)
+            else
+                call fcn(xd(:,tid), fd(:,tid))
+            end if
 
             do i = 1, m
                 J(i,k) = fd(i,tid)%dx
