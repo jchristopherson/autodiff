@@ -47,6 +47,8 @@ endif()
 
 set_target_properties(autodiff PROPERTIES
     Fortran_MODULE_DIRECTORY "${autodiff_module_dir}"
+    POSITION_INDEPENDENT_CODE ON
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
 )
 
 target_include_directories(autodiff PUBLIC
