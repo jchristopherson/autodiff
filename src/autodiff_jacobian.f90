@@ -55,17 +55,9 @@ contains
         end if
 
         if (nt > 1) then
-            if (present(args)) then
-                call jacobian_parallel(fcn, x, J, xd, fd, args)
-            else
-                call jacobian_parallel(fcn, x, J, xd, fd)
-            end if
+            call jacobian_parallel(fcn, x, J, xd, fd, args = args)
         else
-            if (present(args)) then
-                call jacobian_serial(fcn, x, J, xd, fd, args)
-            else
-                call jacobian_serial(fcn, x, J, xd, fd)
-            end if
+            call jacobian_serial(fcn, x, J, xd, fd, args = args)
         end if
 
     end subroutine

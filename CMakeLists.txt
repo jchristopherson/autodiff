@@ -11,7 +11,7 @@ project(
     VERSION 1.0.1
 )
 set(CMAKE_Fortran_STANDARD 2018)
-set(CMAKE_Fortran_STNADARD_REQUIRED TRUE)
+set(CMAKE_Fortran_STANDARD_REQUIRED TRUE)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
