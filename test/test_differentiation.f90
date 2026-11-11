@@ -161,18 +161,18 @@ program test_differentiation
     call check_true("gradient allocates input workspace", size(work_grad%xd) == 2)
     call check_close("gradient workspace seed cleared", work_grad%xd(2)%dx, 0.0_real64)
 
-    ! call work_par%resize(2, 2, 2)
-    ! call check_true("parallel workspace allocates thread columns", &
-    !     size(work_par%xd_pool, 2) == 2 .and. size(work_par%fd_pool, 2) == 2)
-    ! call jacobian(vector_proc, x, j_par, work_par, nthreads = 2)
-    ! call check_close("parallel Jacobian (1,1)", j_par(1,1), x(2))
-    ! call check_close("parallel Jacobian (1,2)", j_par(1,2), x(1))
-    ! call check_close("parallel Jacobian (2,1)", j_par(2,1), 1.0_real64)
-    ! call check_close("parallel Jacobian (2,2)", j_par(2,2), -sin(x(2)))
+    call work_par%resize(2, 2, 2)
+    call check_true("parallel workspace allocates thread columns", &
+        size(work_par%xd_pool, 2) == 2 .and. size(work_par%fd_pool, 2) == 2)
+    call jacobian(vector_proc, x, j_par, work_par, nthreads = 2)
+    call check_close("parallel Jacobian (1,1)", j_par(1,1), x(2))
+    call check_close("parallel Jacobian (1,2)", j_par(1,2), x(1))
+    call check_close("parallel Jacobian (2,1)", j_par(2,1), 1.0_real64)
+    call check_close("parallel Jacobian (2,2)", j_par(2,2), -sin(x(2)))
 
-    ! call jacobian(vector_proc, x, j_par, nthreads = 2)
-    ! call check_close("parallel Jacobian without workspace (1,2)", j_par(1,2), x(1))
-    ! call check_close("parallel Jacobian without workspace (2,2)", j_par(2,2), -sin(x(2)))
+    call jacobian(vector_proc, x, j_par, nthreads = 2)
+    call check_close("parallel Jacobian without workspace (1,2)", j_par(1,2), x(1))
+    call check_close("parallel Jacobian without workspace (2,2)", j_par(2,2), -sin(x(2)))
 
     write(output_unit, '(a,i0,a)') "Passed ", checks, " differentiation checks."
 
