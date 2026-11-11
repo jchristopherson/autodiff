@@ -46,29 +46,19 @@ contains
 
         if (present(work)) then
             if (.not.work%validate_size(n, m, nt)) call work%resize(n, m, nt)
-            ! xd => work%xd_pool(1:n, 1:nt)
-            ! fd => work%fd_pool(1:m, 1:nt)
-            if (nt > 1) then
-                call jacobian_parallel(fcn, x, J, work%xd_pool, work%fd_pool, args = args)
-            else
-                call jacobian_serial(fcn, x, J, work%xd_pool, work%fd_pool, args = args)
-            end if
+            xd => work%xd_pool(1:n, 1:nt)
+            fd => work%fd_pool(1:m, 1:nt)
         else
             allocate(x_buffer(n, nt), f_buffer(m, nt))
-            ! xd => x_buffer
-            ! fd => f_buffer
-            if (nt > 1) then
-                call jacobian_parallel(fcn, x, J, x_buffer, f_buffer, args = args)
-            else
-                call jacobian_serial(fcn, x, J, x_buffer, f_buffer, args = args)
-            end if
+            xd => x_buffer
+            fd => f_buffer
         end if
 
-        ! if (nt > 1) then
-        !     call jacobian_parallel(fcn, x, J, xd, fd, args)
-        ! else
-        !     call jacobian_serial(fcn, x, J, xd, fd, args)
-        ! end if
+        if (nt > 1) then
+            call jacobian_parallel(fcn, x, J, xd, fd, args)
+        else
+            call jacobian_serial(fcn, x, J, xd, fd, args)
+        end if
 
     end subroutine
 

@@ -43,7 +43,7 @@ contains
             fd => f_buffer
         end if
 
-        do concurrent (i = 1:n)
+        do i = 1, n
             xd(i)%x = x(i)
             xd(i)%dx = v(i)
         end do
