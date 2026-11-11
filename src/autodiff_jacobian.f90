@@ -54,11 +54,11 @@ contains
             fd => f_buffer
         end if
 
-        if (nt > 1) then
+        ! if (nt > 1) then
             call jacobian_parallel(fcn, x, J, xd, fd, args = args)
-        else
-            call jacobian_serial(fcn, x, J, xd, fd, args = args)
-        end if
+        ! else
+        !     call jacobian_serial(fcn, x, J, xd, fd, args = args)
+        ! end if
 
     end subroutine
 
