@@ -35,8 +35,7 @@ contains
             !! The maximum number of threads to use when evaluating the
             !! Jacobian columns.  The default is 1 (serial).
 
-        type(dual), allocatable, target, dimension(:,:) :: x_buffer, f_buffer
-        type(dual), pointer, dimension(:,:) :: xd, fd
+        type(dual), allocatable, dimension(:,:) :: x_buffer, f_buffer
         integer :: n, m, nt
 
         n = size(x)
@@ -46,18 +45,20 @@ contains
 
         if (present(work)) then
             if (.not.work%validate_size(n, m, nt)) call work%resize(n, m, nt)
-            xd => work%xd_pool(1:n, 1:nt)
-            fd => work%fd_pool(1:m, 1:nt)
+            if (nt > 1) then
+                call jacobian_parallel(fcn, x, J, work%xd_pool(:, 1:nt), &
+                    work%fd_pool(:, 1:nt), args = args)
+            else
+                call jacobian_serial(fcn, x, J, work%xd_pool(:, 1:nt), &
+                    work%fd_pool(:, 1:nt), args = args)
+            end if
         else
             allocate(x_buffer(n, nt), f_buffer(m, nt))
-            xd => x_buffer
-            fd => f_buffer
-        end if
-
-        if (nt > 1) then
-            call jacobian_parallel(fcn, x, J, xd, fd, args = args)
-        else
-            call jacobian_serial(fcn, x, J, xd, fd, args = args)
+            if (nt > 1) then
+                call jacobian_parallel(fcn, x, J, x_buffer, f_buffer, args = args)
+            else
+                call jacobian_serial(fcn, x, J, x_buffer, f_buffer, args = args)
+            end if
         end if
 
     end subroutine
@@ -89,9 +90,9 @@ contains
             xd(k,1)%dx = 1.0d0
 
             if (present(args)) then
-                call fcn(xd(:,1), fd(:,1), args = args)
+                call fcn(xd(1:n,1), fd(1:m,1), args = args)
             else
-                call fcn(xd(:,1), fd(:,1))
+                call fcn(xd(1:n,1), fd(1:m,1))
             end if
 
             do i = 1, m
@@ -139,9 +140,9 @@ contains
             xd(k,tid)%dx = 1.0d0
 
             if (present(args)) then
-                call fcn(xd(:,tid), fd(:,tid), args = args)
+                call fcn(xd(1:n,tid), fd(1:m,tid), args = args)
             else
-                call fcn(xd(:,tid), fd(:,tid))
+                call fcn(xd(1:n,tid), fd(1:m,tid))
             end if
 
             do i = 1, m

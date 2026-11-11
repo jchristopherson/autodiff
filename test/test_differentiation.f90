@@ -13,6 +13,7 @@ contains
         type(dual), intent(out) :: y(:)
         class(*), intent(in), optional :: args
 
+        if (size(xd) /= 2 .or. size(y) /= 2) error stop "Unexpected vector-function buffer size."
         if (present(args)) then
             select type (args)
             type is (call_counter)
