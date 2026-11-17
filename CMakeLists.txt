@@ -8,7 +8,7 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 project(
     autodiff
     LANGUAGES Fortran
-    VERSION 1.0.1
+    VERSION 1.1.0
 )
 set(CMAKE_Fortran_STANDARD 2018)
 set(CMAKE_Fortran_STNADARD_REQUIRED TRUE)

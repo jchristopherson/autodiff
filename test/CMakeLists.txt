@@ -13,6 +13,11 @@ target_link_libraries(test_differentiation PRIVATE autodiff::autodiff)
 
 add_test(NAME autodiff.differentiation COMMAND test_differentiation)
 
+add_executable(test_hessian test_hessian.f90)
+target_link_libraries(test_hessian PRIVATE autodiff::autodiff)
+
+add_test(NAME autodiff.hessian COMMAND test_hessian)
+
 if (BUILD_SHARED_LIBS AND WIN32)
     add_custom_command(
         TARGET test_autodiff

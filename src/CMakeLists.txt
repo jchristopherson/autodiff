@@ -6,6 +6,8 @@ add_library(autodiff
     autodiff_gradient.f90
     autodiff_jacobian.f90
     autodiff_jvp.f90
+    autodiff_hyperdual_numbers.f90
+    autodiff_hessian.f90
 )
 
 add_library(autodiff::autodiff ALIAS autodiff)

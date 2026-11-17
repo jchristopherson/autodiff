@@ -1,5 +1,5 @@
 name = "autodiff"
-version = "1.0.1"
+version = "1.1.0"
 license = "MIT"
 author = "Jason Christopherson"
 maintainer = "Jason Christopherson"
@@ -26,3 +26,8 @@ main = "test_differentiation.f90"
 name = "test_dual_operations"
 source-dir = "test"
 main = "test_dual_operations.f90"
+
+[[test]]
+name = "test_hessian"
+source-dir = "test"
+main = "test_hessian.f90"
