@@ -1,6 +1,8 @@
 program test_differentiation
     use iso_fortran_env, only: real64, error_unit, output_unit
     use autodiff_dual_numbers, only: dual, operator(+), operator(*), operator(**), sin, cos
+    use autodiff_hyperdual_numbers, only: hyperdual, operator(+), operator(*), operator(**), sin
+    use autodiff_hyperdual_workspace, only: hyperdual_workspace
     use autodiff_gradient, only: gradient
     use autodiff_jacobian, only: jacobian
     use autodiff_jvp, only: jvp
@@ -22,6 +24,7 @@ program test_differentiation
     real(real64) :: j_ws(2,2), jv_ws(2), j_par(2,2)
     type(workspace) :: work, work_new, work_large, work_small, work_jvp
     type(workspace) :: work_grad, work_par
+    type(hyperdual_workspace) :: work_hd
     integer :: checks
 
     checks = 0
@@ -148,6 +151,23 @@ program test_differentiation
     call check_close("parallel Jacobian without workspace (1,2)", j_par(1,2), x(1))
     call check_close("parallel Jacobian without workspace (2,2)", j_par(2,2), -sin(x(2)))
 
+    call gradient(hyperdual_test_function, x, g)
+    call check_close("hyperdual gradient x1", g(1), 2.0_real64 * x(1) * x(2))
+    call check_close("hyperdual gradient x2", g(2), x(1)**2 + cos(x(2)))
+    call check_true("hyperdual gradient supports absent context", counter%calls == 12)
+
+    call work_hd%resize(3)
+    work_hd%xd_pool = hyperdual(0.0_real64, 1.0_real64, 2.0_real64, 3.0_real64)
+    total_calls = 0
+    call gradient(hyperdual_test_function, x, g, work = work_hd, args = counter)
+    call check_close("hyperdual gradient with workspace x1", g(1), 2.0_real64 * x(1) * x(2))
+    call check_close("hyperdual gradient with workspace x2", g(2), x(1)**2 + cos(x(2)))
+    call check_true("hyperdual gradient forwards context", counter%calls == size(x))
+    call check_true("hyperdual gradient clears workspace seeds", &
+        all(work_hd%xd_pool(1:2,1)%dx == 0.0_real64) .and. &
+        all(work_hd%xd_pool(1:2,1)%dy == 0.0_real64) .and. &
+        all(work_hd%xd_pool(1:2,1)%dxy == 0.0_real64))
+
     write(output_unit, '(a,i0,a)') "Passed ", checks, " differentiation checks."
 
 contains
@@ -164,6 +184,23 @@ contains
                 args%calls = args%calls + 1
             class default
                 error stop "Unexpected scalar-function context type."
+            end select
+        end if
+        y = xd(1)**2 * xd(2) + sin(xd(2))
+    end function
+
+    function hyperdual_test_function(xd, args) result(y)
+        type(hyperdual), intent(in) :: xd(:)
+        class(*), intent(in), optional :: args
+        type(hyperdual) :: y
+
+        if (size(xd) /= size(x)) error stop "Unexpected hyper-dual input size."
+        if (present(args)) then
+            select type (args)
+            type is (call_counter)
+                args%calls = args%calls + 1
+            class default
+                error stop "Unexpected hyper-dual function context type."
             end select
         end if
         y = xd(1)**2 * xd(2) + sin(xd(2))

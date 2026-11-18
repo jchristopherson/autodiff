@@ -81,7 +81,7 @@
     <div class="container">
   <div class="row">
     <h1>gradient
-      <small>Subroutine</small>
+      <small>Interface</small>
       
     </h1>
       <div class="container p-2 mb-4 bg-light border rounded-3">
@@ -91,7 +91,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 7.0% of total for procedures.">29 statements</a>
+                 title="<p> 0.8% of total for procedures.</p>Including implementation: 60 statements, 15.4% of total for procedures.">3 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -120,64 +120,65 @@
   </script>
 
   </div>
-  
+
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
-      <div id="sidebar">
+        <div id="sidebar">
       <h3>Contents</h3>
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
       <div class="card mb-4">
-      <a data-bs-toggle="collapse" href="#vars-0"
-         aria-expanded="false" aria-controls="vars-0">
-         <h4 class="card-header bg-primary text-white">Variables</h4>
+      <a data-bs-toggle="collapse" href="#modprocs-0"
+         aria-expanded="false" aria-controls="modprocs-0">
+         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
       </a>
-      <div id="vars-0" class="collapse">
+      <div id="modprocs-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../proc/gradient.html#variable-fd">fd</a>
-            <a class="list-group-item" href="../proc/gradient.html#variable-i">i</a>
-            <a class="list-group-item" href="../proc/gradient.html#variable-j">j</a>
-            <a class="list-group-item" href="../proc/gradient.html#variable-n">n</a>
-            <a class="list-group-item" href="../proc/gradient.html#variable-x_buffer">x_buffer</a>
-            <a class="list-group-item" href="../proc/gradient.html#variable-xd">xd</a>
+            <a class="list-group-item" href="../interface/gradient.html#moduleprocedure-gradient_dual">gradient_dual</a>
+            <a class="list-group-item" href="../interface/gradient.html#moduleprocedure-gradient_hyperdual">gradient_hyperdual</a>
         </div>
       </div>
     </div>
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
 
 
   </div>
 
     </div>
-    
-    <div class="col-md-9" id='text'>
-    <h2>public  subroutine gradient(fcn, x, g, work, args)  
-</h2>
-    
 
-    <p>Compute a scalar function's gradient by seeding one input direction 
+    <div class="col-md-9" id='text'>
+      <h2>public interface gradient</h2>
+      <p>Compute a scalar function's gradient with a dual or hyper-dual callback.</p>
+<br>
+
+
+        <h2>Module Procedures</h2>
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-gradient_dual"></span> <h3>private  subroutine gradient_dual(fcn, x, g, work, args)  
+</h3></div>
+    <div class="card-body">
+        <p>Compute a scalar function's gradient by seeding one input direction 
 at a time.</p>
 
-
-    <h3>Arguments</h3>
-        <table class="table table-striped varlist">
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
     <thead>
       <tr>
         <th scope="col">Type</th>
@@ -189,8 +190,8 @@ at a time.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-fcn"></span>
-              procedure(<a href='..\interface\scalar_function.html'>scalar_function</a>)
+              <span class="anchor" id="variable-fcn~6"></span>
+              procedure(<a href='scalar_function.html'>scalar_function</a>)
             </td>
 <td></td>
               <td></td>            <td>
@@ -204,7 +205,7 @@ at a time.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x"></span>
+              <span class="anchor" id="variable-x~18"></span>
               real(kind=real64),
             </td>
 <td>intent(in),</td>
@@ -219,7 +220,7 @@ at a time.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g"></span>
+              <span class="anchor" id="variable-g~3"></span>
               real(kind=real64),
             </td>
 <td>intent(out),</td>
@@ -235,7 +236,7 @@ at a time.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-work"></span>
+              <span class="anchor" id="variable-work~6"></span>
               class(<a href='..\type\workspace.html'>workspace</a>),
             </td>
 <td>intent(inout),</td>
@@ -252,7 +253,7 @@ the workspace to suit its needs.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-args"></span>
+              <span class="anchor" id="variable-args~9"></span>
               class(*),
             </td>
 <td>intent(in),</td>
@@ -268,141 +269,112 @@ the workspace to suit its needs.</p>
     </tbody>
   </table>
 
-    <br>
 
+    </div>
+  </div>
 
-    <section>    
-      <h2>Variables</h2>
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-gradient_hyperdual"></span> <h3>private  subroutine gradient_hyperdual(fcn, x, g, work, args)  
+</h3></div>
+    <div class="card-body">
+        <p>Compute a scalar function's gradient using the first hyper-dual
+derivative direction, leaving the other seeds zero.</p>
+
+  <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
         <th scope="col">Type</th>
-<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
         <th scope="col"></th>
         <th scope="col">Name</th>
-<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-fd"></span>
-              type(<a href='..\type\dual.html'>dual</a>),
+              <span class="anchor" id="variable-fcn~7"></span>
+              procedure(<a href='hyperdual_function.html'>hyperdual_function</a>)
             </td>
-              <td>public</td>
-            <td>
+<td></td>
+              <td></td>            <td>
               
             </td>
             <td>::</td>
-            <td><strong>fd</strong></td>
-                <td></td>
-                <td></td>
+            <td><strong>fcn</strong></td>
             <td>
-                
+                <p>User function whose result carries the value and derivatives.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-i"></span>
-              integer,
+              <span class="anchor" id="variable-x~19"></span>
+              real(kind=real64),
             </td>
-              <td>public</td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>x</strong></td>
             <td>
+                <p>Point at which the gradient is evaluated.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-g~4"></span>
+              real(kind=real64),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>g</strong></td>
+            <td>
+                <p>Gradient output, with one component per input.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-work~7"></span>
+              class(<a href='..\type\hyperdual_workspace.html'>hyperdual_workspace</a>),
+            </td>
+<td>intent(inout),</td>
+              <td>optional,</td>            <td>
+              target
+            </td>
+            <td>::</td>
+            <td><strong>work</strong></td>
+            <td>
+                <p>Reusable input buffer, grown if needed.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-args~10"></span>
+              class(*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
               
             </td>
             <td>::</td>
-            <td><strong>i</strong></td>
-                <td></td>
-                <td></td>
+            <td><strong>args</strong></td>
             <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-j"></span>
-              integer,
-            </td>
-              <td>public</td>
-            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>j</strong></td>
-                <td></td>
-                <td></td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-n"></span>
-              integer,
-            </td>
-              <td>public</td>
-            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>n</strong></td>
-                <td></td>
-                <td></td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-x_buffer"></span>
-              type(<a href='..\type\dual.html'>dual</a>),
-            </td>
-              <td>public,</td>
-            <td>
-              allocatable, target, dimension(:)
-            </td>
-            <td>::</td>
-            <td><strong>x_buffer</strong></td>
-                <td></td>
-                <td></td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-xd"></span>
-              type(<a href='..\type\dual.html'>dual</a>),
-            </td>
-              <td>public,</td>
-            <td>
-              pointer, dimension(:)
-            </td>
-            <td>::</td>
-            <td><strong>xd</strong></td>
-                <td></td>
-                <td></td>
-            <td>
-                
+                <p>Optional caller-owned context passed to the function.</p>
             </td>
         </tr>
     </tbody>
   </table>
 
-    </section>
-    <br>
-    
-    
 
-    
-    
-
-
-
-    
-    
     </div>
   </div>
 
+</div>
+  </div>
       <hr>
     </div> <!-- /container -->
     <footer>
@@ -418,7 +390,7 @@ the workspace to suit its needs.</p>
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-11-18 12:44 -0600             </p>
+ on 2026-11-18 14:12 -0600             </p>
           </div>
         </div>
         <br>

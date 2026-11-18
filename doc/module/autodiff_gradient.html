@@ -91,7 +91,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 2.1% of total for modules and submodules.">37 statements</a>
+                 title=" 4.0% of total for modules and submodules.">72 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -132,22 +132,22 @@
   
   
   
-  
-  
-  
-  
       <div class="card mb-4">
-      <a data-bs-toggle="collapse" href="#subs-0"
-         aria-expanded="false" aria-controls="subs-0">
-         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      <a data-bs-toggle="collapse" href="#inters-0"
+         aria-expanded="false" aria-controls="inters-0">
+         <h4 class="card-header bg-primary text-white">Interfaces</h4>
       </a>
-      <div id="subs-0" class="collapse">
+      <div id="inters-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../module/autodiff_gradient.html#proc-gradient">gradient</a>
+            <a class="list-group-item" href="../module/autodiff_gradient.html#interface-gradient">gradient</a>
         </div>
       </div>
     </div>
 
+  
+  
+  
+  
   
   
   
@@ -169,10 +169,12 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
-                  <li class="list-inline-item"><a href='autodiff_interfaces.html'>autodiff_interfaces</a></li>
-                  <li class="list-inline-item"><a href='autodiff_dual_numbers.html'>autodiff_dual_numbers</a></li>
-                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
                   <li class="list-inline-item"><a href='autodiff_workspace.html'>autodiff_workspace</a></li>
+                  <li class="list-inline-item"><a href='autodiff_interfaces.html'>autodiff_interfaces</a></li>
+                  <li class="list-inline-item"><a href='autodiff_hyperdual_numbers.html'>autodiff_hyperdual_numbers</a></li>
+                  <li class="list-inline-item"><a href='autodiff_dual_numbers.html'>autodiff_dual_numbers</a></li>
+                  <li class="list-inline-item"><a href='autodiff_hyperdual_workspace.html'>autodiff_hyperdual_workspace</a></li>
+                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
               </ul>
             </li>
         </ul>
@@ -185,17 +187,23 @@
 
 
 
-
-
-
-
         <section>
-          <h2>Subroutines</h2>
+          <h2>Interfaces</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-gradient"></span> <h3>public  subroutine <a href='..\proc\gradient.html'>gradient</a>(fcn, x, g, work, args)  
-</h3></div>
-    <div class="card-body">
-          
+    <div class="card-header bg-light codesum">
+      <span class="anchor" id="interface-gradient"></span>
+      <h3>public        interface <a href='..\interface\gradient.html'>gradient</a> 
+      </h3>
+    </div>
+      <div class="card-body">
+        <p>Compute a scalar function's gradient with a dual or hyper-dual callback.</p>
+      </div>
+    <ul class="list-group">
+          <li class="list-group-item">
+                <h3>
+    private  subroutine gradient_dual(fcn, x, g, work, args)  
+
+    </h3>
   <p>Compute a scalar function's gradient by seeding one input direction 
 at a time.</p>
 
@@ -212,7 +220,7 @@ at a time.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-fcn"></span>
+              <span class="anchor" id="variable-fcn~6"></span>
               procedure(<a href='..\interface\scalar_function.html'>scalar_function</a>)
             </td>
 <td></td>
@@ -222,12 +230,12 @@ at a time.</p>
             <td>::</td>
             <td><strong>fcn</strong></td>
             <td>
-<p>User function whose result carries the value and seeded derivative.</p>
+                <p>User function whose result carries the value and seeded derivative.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x"></span>
+              <span class="anchor" id="variable-x~18"></span>
               real(kind=real64),
             </td>
 <td>intent(in),</td>
@@ -237,12 +245,12 @@ at a time.</p>
             <td>::</td>
             <td><strong>x</strong></td>
             <td>
-<p>Point at which the gradient is evaluated.</p>
+                <p>Point at which the gradient is evaluated.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-g"></span>
+              <span class="anchor" id="variable-g~3"></span>
               real(kind=real64),
             </td>
 <td>intent(out),</td>
@@ -252,13 +260,13 @@ at a time.</p>
             <td>::</td>
             <td><strong>g</strong></td>
             <td>
-<p>Gradient output, with one component per input; 
+                <p>Gradient output, with one component per input; 
 <script type="math/tex">g_i = \partial f/\partial x_i</script>.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-work"></span>
+              <span class="anchor" id="variable-work~6"></span>
               class(<a href='..\type\workspace.html'>workspace</a>),
             </td>
 <td>intent(inout),</td>
@@ -268,14 +276,14 @@ at a time.</p>
             <td>::</td>
             <td><strong>work</strong></td>
             <td>
-<p>An optional workspace to use in order to avoid internal memory
+                <p>An optional workspace to use in order to avoid internal memory
 allocations.  If not sized properly, this routine will grow
 the workspace to suit its needs.</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-args"></span>
+              <span class="anchor" id="variable-args~9"></span>
               class(*),
             </td>
 <td>intent(in),</td>
@@ -285,18 +293,122 @@ the workspace to suit its needs.</p>
             <td>::</td>
             <td><strong>args</strong></td>
             <td>
-<p>Optional caller-owned context passed to the procedure.</p>
+                <p>Optional caller-owned context passed to the procedure.</p>
             </td>
         </tr>
     </tbody>
   </table>
 
 
-    </div>
+          </li>
+          <li class="list-group-item">
+                <h3>
+    private  subroutine gradient_hyperdual(fcn, x, g, work, args)  
+
+    </h3>
+  <p>Compute a scalar function's gradient using the first hyper-dual
+derivative direction, leaving the other seeds zero.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fcn~7"></span>
+              procedure(<a href='..\interface\hyperdual_function.html'>hyperdual_function</a>)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>fcn</strong></td>
+            <td>
+                <p>User function whose result carries the value and derivatives.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~19"></span>
+              real(kind=real64),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>x</strong></td>
+            <td>
+                <p>Point at which the gradient is evaluated.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-g~4"></span>
+              real(kind=real64),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>g</strong></td>
+            <td>
+                <p>Gradient output, with one component per input.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-work~7"></span>
+              class(<a href='..\type\hyperdual_workspace.html'>hyperdual_workspace</a>),
+            </td>
+<td>intent(inout),</td>
+              <td>optional,</td>            <td>
+              target
+            </td>
+            <td>::</td>
+            <td><strong>work</strong></td>
+            <td>
+                <p>Reusable input buffer, grown if needed.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-args~10"></span>
+              class(*),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>args</strong></td>
+            <td>
+                <p>Optional caller-owned context passed to the function.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+    </ul>
   </div>
 
         </section>
         <br>
+
+
+
+
 
 
 
@@ -318,7 +430,7 @@ the workspace to suit its needs.</p>
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-11-18 12:44 -0600             </p>
+ on 2026-11-18 14:12 -0600             </p>
           </div>
         </div>
         <br>
