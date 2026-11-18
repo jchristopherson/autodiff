@@ -54,4 +54,40 @@ contains
         end do
     end subroutine
 
+    subroutine hvp(fcn, x, v, Hv, args)
+        !! Evaluate the product of a scalar function's Hessian and a vector
+        !! without forming the Hessian.  Each evaluation seeds the first
+        !! derivative direction with `v` and the second with a unit vector,
+        !! so the mixed derivative yields one component of \(Hv\).  This
+        !! requires `size(x)` evaluations of `fcn`.
+        procedure(hyperdual_function) :: fcn
+            !! User function whose result carries the value and derivatives.
+        real(real64), intent(in), dimension(:) :: x
+            !! Point at which the Hessian is evaluated.
+        real(real64), intent(in), dimension(:) :: v
+            !! Direction vector with one component per input.
+        real(real64), intent(out), dimension(:) :: Hv
+            !! Product of the Hessian and v, satisfying \(Hv = H_f(x)v\).
+        class(*), intent(in), optional :: args
+            !! Optional caller-owned context passed to the function.
+
+        type(hyperdual), allocatable, dimension(:) :: xd
+        type(hyperdual) :: fd
+        integer :: i, j, n
+
+        n = size(x)
+        allocate(xd(n))
+        do j = 1, n
+            xd(j) = x(j)
+            xd(j)%dx = v(j)
+        end do
+
+        do i = 1, n
+            xd(i)%dy = 1.0_real64
+            fd = fcn(xd, args = args)
+            Hv(i) = fd%dxy
+            xd(i)%dy = 0.0_real64
+        end do
+    end subroutine
+
 end module

@@ -2,12 +2,12 @@ program test_hessian
     use iso_fortran_env, only: real64, error_unit, output_unit
     use autodiff_hyperdual_numbers
     use autodiff_interfaces, only: hyperdual_function
-    use autodiff_hessian, only: hessian
+    use autodiff_hessian, only: hessian, hvp
     implicit none
 
     real(real64), parameter :: tol = 1.0d-10
     integer :: failures
-    real(real64) :: x(2), H(2,2), g(2), f
+    real(real64) :: x(2), H(2,2), g(2), f, v(2), Hv(2)
 
     failures = 0
 
@@ -44,6 +44,16 @@ program test_hessian
     call check_close("rational H12", H(1,2), -3.0_real64 * x(1)**2 / x(2)**2)
     call check_close("rational H22", H(2,2), 2.0_real64 * x(1)**3 / x(2)**3 &
         + 3.75_real64 * sqrt(x(2)))
+
+    ! Hessian-vector product, checked against the analytic mixed function Hessian
+    x = [1.3_real64, 0.7_real64]
+    v = [0.4_real64, -0.9_real64]
+    call hvp(mixed_function, x, v, Hv)
+    H(1,1) = 2.0_real64 * x(2) + x(2)**2 * exp(x(1) * x(2))
+    H(1,2) = 2.0_real64 * x(1) + exp(x(1) * x(2)) + x(1) * x(2) * exp(x(1) * x(2))
+    H(2,2) = -sin(x(2)) + x(1)**2 * exp(x(1) * x(2))
+    call check_close("hvp component 1", Hv(1), H(1,1) * v(1) + H(1,2) * v(2))
+    call check_close("hvp component 2", Hv(2), H(1,2) * v(1) + H(2,2) * v(2))
 
     if (failures > 0) then
         write(error_unit, '(A,I0,A)') "hessian tests failed: ", failures, " check(s)"

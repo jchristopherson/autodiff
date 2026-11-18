@@ -16,6 +16,7 @@ The documentation can be found [here](https://jchristopherson.github.io/autodiff
 | Scalar gradients | Compute the gradient of a scalar-valued function with `gradient`. |
 | Jacobian matrices | Compute the full Jacobian of a vector-valued function with `jacobian`. |
 | Jacobian-vector products | Evaluate `J(x) v` directly with `jvp`, without forming the Jacobian. |
+| Hessian-vector products | Evaluate `H(x) v` directly with `hvp`, using second-order hyper-dual numbers without forming the Hessian. |
 | Hessian matrices | Compute the Hessian of a scalar-valued function, together with its gradient and value, with `hessian` using second-order hyper-dual numbers. |
 | Dual-number operations | Propagate derivatives through overloaded arithmetic and common intrinsic functions, including trigonometric, exponential, logarithmic, hyperbolic, and error functions. |
 | Reusable workspace | Pass a `workspace` to differentiation routines to reuse temporary storage across calls. |
