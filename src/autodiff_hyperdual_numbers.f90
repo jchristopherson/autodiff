@@ -13,7 +13,8 @@ module autodiff_hyperdual_numbers
     !! Comparisons use values only and ignore derivative seeds.
     public :: operator(>), operator(>=)
     !! Remaining value-only ordering comparisons.
-    public :: abs, sqrt, exp, log, sin, cos, tan, atan, sinh, cosh, tanh
+    public :: abs, sqrt, exp, log, log10, sin, cos, tan, asin, acos, atan, atan2
+    public :: sinh, cosh, tanh, asinh, acosh, atanh, erf, erfc, min, max, sign
     !! Overloaded real-valued intrinsic functions with second-order derivative propagation.
 
     type hyperdual
@@ -119,6 +120,11 @@ module autodiff_hyperdual_numbers
         module procedure :: hd_log
     end interface
 
+    interface log10
+        !! Base-ten logarithm of a positive value.
+        module procedure :: hd_log10
+    end interface
+
     interface sin
         !! Sine function.
         module procedure :: hd_sin
@@ -134,9 +140,24 @@ module autodiff_hyperdual_numbers
         module procedure :: hd_tan
     end interface
 
+    interface asin
+        !! Inverse sine function.
+        module procedure :: hd_asin
+    end interface
+
+    interface acos
+        !! Inverse cosine function.
+        module procedure :: hd_acos
+    end interface
+
     interface atan
-        !! Inverse tangent function.
-        module procedure :: hd_atan
+        !! One- or two-argument inverse tangent function.
+        module procedure :: hd_atan, hd_atan2, hd_atan2_real, real_atan2_hd
+    end interface
+
+    interface atan2
+        !! Quadrant-aware inverse tangent with ordinate first.
+        module procedure :: hd_atan2, hd_atan2_real, real_atan2_hd
     end interface
 
     interface sinh
@@ -152,6 +173,46 @@ module autodiff_hyperdual_numbers
     interface tanh
         !! Hyperbolic tangent function.
         module procedure :: hd_tanh
+    end interface
+
+    interface asinh
+        !! Inverse hyperbolic sine function.
+        module procedure :: hd_asinh
+    end interface
+
+    interface acosh
+        !! Inverse hyperbolic cosine function.
+        module procedure :: hd_acosh
+    end interface
+
+    interface atanh
+        !! Inverse hyperbolic tangent function.
+        module procedure :: hd_atanh
+    end interface
+
+    interface erf
+        !! Error function.
+        module procedure :: hd_erf
+    end interface
+
+    interface erfc
+        !! Complementary error function.
+        module procedure :: hd_erfc
+    end interface
+
+    interface min
+        !! Minimum, carrying the selected operand's derivatives; ties choose the first.
+        module procedure :: hd_min, hd_min_real, real_min_hd
+    end interface
+
+    interface max
+        !! Maximum, carrying the selected operand's derivatives; ties choose the first.
+        module procedure :: hd_max, hd_max_real, real_max_hd
+    end interface
+
+    interface sign
+        !! Magnitude of the first operand with the sign of the second.
+        module procedure :: hd_sign, hd_sign_real, real_sign_hd
     end interface
 
 contains
@@ -544,6 +605,15 @@ contains
         c = hd_compose(a, log(a%x), 1.0_real64 / a%x, -1.0_real64 / a%x**2)
     end function
 
+    pure function hd_log10(a) result(c)
+        type(hyperdual), intent(in) :: a
+        type(hyperdual) :: c
+        real(real64) :: ln10
+        ln10 = log(10.0_real64)
+        c = hd_compose(a, log10(a%x), 1.0_real64 / (a%x * ln10), &
+            -1.0_real64 / (a%x * a%x * ln10))
+    end function
+
     pure function hd_sin(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
@@ -572,6 +642,54 @@ contains
         c = hd_compose(a, atan(a%x), 1.0_real64 / d, -2.0_real64 * a%x / d**2)
     end function
 
+    pure function hd_asin(a) result(c)
+        type(hyperdual), intent(in) :: a
+        type(hyperdual) :: c
+        real(real64) :: d
+        d = 1.0_real64 - a%x * a%x
+        c = hd_compose(a, asin(a%x), 1.0_real64 / sqrt(d), a%x / d**1.5_real64)
+    end function
+
+    pure function hd_acos(a) result(c)
+        type(hyperdual), intent(in) :: a
+        type(hyperdual) :: c
+        real(real64) :: d
+        d = 1.0_real64 - a%x * a%x
+        c = hd_compose(a, acos(a%x), -1.0_real64 / sqrt(d), -a%x / d**1.5_real64)
+    end function
+
+    pure function hd_atan2(y, x) result(c)
+        type(hyperdual), intent(in) :: y, x
+        type(hyperdual) :: c
+        real(real64) :: r2, r4, f_y, f_x, f_yy, f_yx, f_xx
+        r2 = x%x * x%x + y%x * y%x
+        r4 = r2 * r2
+        f_y = x%x / r2
+        f_x = -y%x / r2
+        f_yy = -2.0_real64 * x%x * y%x / r4
+        f_yx = (y%x * y%x - x%x * x%x) / r4
+        f_xx = 2.0_real64 * x%x * y%x / r4
+        c%x = atan2(y%x, x%x)
+        c%dx = f_y * y%dx + f_x * x%dx
+        c%dy = f_y * y%dy + f_x * x%dy
+        c%dxy = f_y * y%dxy + f_x * x%dxy + f_yy * y%dx * y%dy + &
+            f_yx * (y%dx * x%dy + x%dx * y%dy) + f_xx * x%dx * x%dy
+    end function
+
+    pure function hd_atan2_real(y, x) result(c)
+        type(hyperdual), intent(in) :: y
+        real(real64), intent(in) :: x
+        type(hyperdual) :: c
+        c = hd_atan2(y, hd_const(x))
+    end function
+
+    pure function real_atan2_hd(y, x) result(c)
+        real(real64), intent(in) :: y
+        type(hyperdual), intent(in) :: x
+        type(hyperdual) :: c
+        c = hd_atan2(hd_const(y), x)
+    end function
+
     pure function hd_sinh(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
@@ -590,6 +708,116 @@ contains
         real(real64) :: t
         t = tanh(a%x)
         c = hd_compose(a, t, 1.0_real64 - t * t, -2.0_real64 * t * (1.0_real64 - t * t))
+    end function
+
+    pure function hd_asinh(a) result(c)
+        type(hyperdual), intent(in) :: a
+        type(hyperdual) :: c
+        real(real64) :: d
+        d = 1.0_real64 + a%x * a%x
+        c = hd_compose(a, asinh(a%x), 1.0_real64 / sqrt(d), -a%x / d**1.5_real64)
+    end function
+
+    pure function hd_acosh(a) result(c)
+        type(hyperdual), intent(in) :: a
+        type(hyperdual) :: c
+        real(real64) :: d
+        d = a%x * a%x - 1.0_real64
+        c = hd_compose(a, acosh(a%x), 1.0_real64 / sqrt(d), -a%x / d**1.5_real64)
+    end function
+
+    pure function hd_atanh(a) result(c)
+        type(hyperdual), intent(in) :: a
+        type(hyperdual) :: c
+        real(real64) :: d
+        d = 1.0_real64 - a%x * a%x
+        c = hd_compose(a, atanh(a%x), 1.0_real64 / d, 2.0_real64 * a%x / d**2)
+    end function
+
+    pure function hd_erf(a) result(c)
+        type(hyperdual), intent(in) :: a
+        type(hyperdual) :: c
+        real(real64) :: f1
+        f1 = 2.0_real64 / sqrt(acos(-1.0_real64)) * exp(-a%x * a%x)
+        c = hd_compose(a, erf(a%x), f1, -2.0_real64 * a%x * f1)
+    end function
+
+    pure function hd_erfc(a) result(c)
+        type(hyperdual), intent(in) :: a
+        type(hyperdual) :: c
+        real(real64) :: f1
+        f1 = -2.0_real64 / sqrt(acos(-1.0_real64)) * exp(-a%x * a%x)
+        c = hd_compose(a, erfc(a%x), f1, -2.0_real64 * a%x * f1)
+    end function
+
+    pure function hd_min(a, b) result(c)
+        type(hyperdual), intent(in) :: a, b
+        type(hyperdual) :: c
+        if (a%x <= b%x) then
+            c = a
+        else
+            c = b
+        end if
+    end function
+
+    pure function hd_min_real(a, b) result(c)
+        type(hyperdual), intent(in) :: a
+        real(real64), intent(in) :: b
+        type(hyperdual) :: c
+        c = hd_min(a, hd_const(b))
+    end function
+
+    pure function real_min_hd(a, b) result(c)
+        real(real64), intent(in) :: a
+        type(hyperdual), intent(in) :: b
+        type(hyperdual) :: c
+        c = hd_min(hd_const(a), b)
+    end function
+
+    pure function hd_max(a, b) result(c)
+        type(hyperdual), intent(in) :: a, b
+        type(hyperdual) :: c
+        if (a%x >= b%x) then
+            c = a
+        else
+            c = b
+        end if
+    end function
+
+    pure function hd_max_real(a, b) result(c)
+        type(hyperdual), intent(in) :: a
+        real(real64), intent(in) :: b
+        type(hyperdual) :: c
+        c = hd_max(a, hd_const(b))
+    end function
+
+    pure function real_max_hd(a, b) result(c)
+        real(real64), intent(in) :: a
+        type(hyperdual), intent(in) :: b
+        type(hyperdual) :: c
+        c = hd_max(hd_const(a), b)
+    end function
+
+    pure function hd_sign(a, b) result(c)
+        type(hyperdual), intent(in) :: a, b
+        type(hyperdual) :: c
+        real(real64) :: s
+        s = sign(1.0_real64, b%x)
+        c = hd_compose(a, sign(abs(a%x), b%x), s * sign(1.0_real64, a%x), 0.0_real64)
+    end function
+
+    pure function hd_sign_real(a, b) result(c)
+        type(hyperdual), intent(in) :: a
+        real(real64), intent(in) :: b
+        type(hyperdual) :: c
+        c = hd_sign(a, hd_const(b))
+    end function
+
+    pure function real_sign_hd(a, b) result(c)
+        real(real64), intent(in) :: a
+        type(hyperdual), intent(in) :: b
+        type(hyperdual) :: c
+        c = hd_const(sign(a, b%x))
     end function
 
 end module
