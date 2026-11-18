@@ -222,9 +222,9 @@ contains
         real(real64), intent(in) :: c
         type(hyperdual) :: h
         h%x = c
-        h%dx = 0.0_real64
-        h%dy = 0.0_real64
-        h%dxy = 0.0_real64
+        h%dx = 0.0d0
+        h%dy = 0.0d0
+        h%dxy = 0.0d0
     end function
 
     ! Applies the chain rule for f(a) given f(a.x), f'(a.x), and f''(a.x).
@@ -395,7 +395,7 @@ contains
     pure function hd_reciprocal(b) result(c)
         type(hyperdual), intent(in) :: b
         type(hyperdual) :: c
-        c = hd_compose(b, 1.0_real64 / b%x, -1.0_real64 / b%x**2, 2.0_real64 / b%x**3)
+        c = hd_compose(b, 1.0d0 / b%x, -1.0d0 / b%x**2, 2.0d0 / b%x**3)
     end function
 
     pure function hd_divide(a, b) result(c)
@@ -438,8 +438,8 @@ contains
         integer, intent(in) :: n
         type(hyperdual) :: c
         real(real64) :: f1, f2
-        f1 = 0.0_real64
-        f2 = 0.0_real64
+        f1 = 0.0d0
+        f2 = 0.0d0
         if (n /= 0) f1 = real(n, real64) * a%x**(n - 1)
         if (n /= 0 .and. n /= 1) f2 = real(n * (n - 1), real64) * a%x**(n - 2)
         c = hd_compose(a, a%x**n, f1, f2)
@@ -450,10 +450,10 @@ contains
         real(real64), intent(in) :: p
         type(hyperdual) :: c
         real(real64) :: f1, f2
-        f1 = 0.0_real64
-        f2 = 0.0_real64
-        if (p /= 0.0_real64) f1 = p * a%x**(p - 1.0_real64)
-        if (p /= 0.0_real64 .and. p /= 1.0_real64) f2 = p * (p - 1.0_real64) * a%x**(p - 2.0_real64)
+        f1 = 0.0d0
+        f2 = 0.0d0
+        if (p /= 0.0d0) f1 = p * a%x**(p - 1.0d0)
+        if (p /= 0.0d0 .and. p /= 1.0d0) f2 = p * (p - 1.0d0) * a%x**(p - 2.0d0)
         c = hd_compose(a, a%x**p, f1, f2)
     end function
 
@@ -578,9 +578,9 @@ contains
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: s
-        s = 1.0_real64
-        if (a%x < 0.0_real64) s = -1.0_real64
-        c = hd_compose(a, abs(a%x), s, 0.0_real64)
+        s = 1.0d0
+        if (a%x < 0.0d0) s = -1.0d0
+        c = hd_compose(a, abs(a%x), s, 0.0d0)
     end function
 
     pure function hd_sqrt(a) result(c)
@@ -588,7 +588,7 @@ contains
         type(hyperdual) :: c
         real(real64) :: s
         s = sqrt(a%x)
-        c = hd_compose(a, s, 0.5_real64 / s, -0.25_real64 / (a%x * s))
+        c = hd_compose(a, s, 0.5d0 / s, -0.25d0 / (a%x * s))
     end function
 
     pure function hd_exp(a) result(c)
@@ -602,16 +602,16 @@ contains
     pure function hd_log(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
-        c = hd_compose(a, log(a%x), 1.0_real64 / a%x, -1.0_real64 / a%x**2)
+        c = hd_compose(a, log(a%x), 1.0d0 / a%x, -1.0d0 / a%x**2)
     end function
 
     pure function hd_log10(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: ln10
-        ln10 = log(10.0_real64)
-        c = hd_compose(a, log10(a%x), 1.0_real64 / (a%x * ln10), &
-            -1.0_real64 / (a%x * a%x * ln10))
+        ln10 = log(10.0d0)
+        c = hd_compose(a, log10(a%x), 1.0d0 / (a%x * ln10), &
+            -1.0d0 / (a%x * a%x * ln10))
     end function
 
     pure function hd_sin(a) result(c)
@@ -631,31 +631,31 @@ contains
         type(hyperdual) :: c
         real(real64) :: t
         t = tan(a%x)
-        c = hd_compose(a, t, 1.0_real64 + t * t, 2.0_real64 * t * (1.0_real64 + t * t))
+        c = hd_compose(a, t, 1.0d0 + t * t, 2.0d0 * t * (1.0d0 + t * t))
     end function
 
     pure function hd_atan(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: d
-        d = 1.0_real64 + a%x * a%x
-        c = hd_compose(a, atan(a%x), 1.0_real64 / d, -2.0_real64 * a%x / d**2)
+        d = 1.0d0 + a%x * a%x
+        c = hd_compose(a, atan(a%x), 1.0d0 / d, -2.0d0 * a%x / d**2)
     end function
 
     pure function hd_asin(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: d
-        d = 1.0_real64 - a%x * a%x
-        c = hd_compose(a, asin(a%x), 1.0_real64 / sqrt(d), a%x / d**1.5_real64)
+        d = 1.0d0 - a%x * a%x
+        c = hd_compose(a, asin(a%x), 1.0d0 / sqrt(d), a%x / d**1.5d0)
     end function
 
     pure function hd_acos(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: d
-        d = 1.0_real64 - a%x * a%x
-        c = hd_compose(a, acos(a%x), -1.0_real64 / sqrt(d), -a%x / d**1.5_real64)
+        d = 1.0d0 - a%x * a%x
+        c = hd_compose(a, acos(a%x), -1.0d0 / sqrt(d), -a%x / d**1.5d0)
     end function
 
     pure function hd_atan2(y, x) result(c)
@@ -666,9 +666,9 @@ contains
         r4 = r2 * r2
         f_y = x%x / r2
         f_x = -y%x / r2
-        f_yy = -2.0_real64 * x%x * y%x / r4
+        f_yy = -2.0d0 * x%x * y%x / r4
         f_yx = (y%x * y%x - x%x * x%x) / r4
-        f_xx = 2.0_real64 * x%x * y%x / r4
+        f_xx = 2.0d0 * x%x * y%x / r4
         c%x = atan2(y%x, x%x)
         c%dx = f_y * y%dx + f_x * x%dx
         c%dy = f_y * y%dy + f_x * x%dy
@@ -707,47 +707,47 @@ contains
         type(hyperdual) :: c
         real(real64) :: t
         t = tanh(a%x)
-        c = hd_compose(a, t, 1.0_real64 - t * t, -2.0_real64 * t * (1.0_real64 - t * t))
+        c = hd_compose(a, t, 1.0d0 - t * t, -2.0d0 * t * (1.0d0 - t * t))
     end function
 
     pure function hd_asinh(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: d
-        d = 1.0_real64 + a%x * a%x
-        c = hd_compose(a, asinh(a%x), 1.0_real64 / sqrt(d), -a%x / d**1.5_real64)
+        d = 1.0d0 + a%x * a%x
+        c = hd_compose(a, asinh(a%x), 1.0d0 / sqrt(d), -a%x / d**1.5d0)
     end function
 
     pure function hd_acosh(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: d
-        d = a%x * a%x - 1.0_real64
-        c = hd_compose(a, acosh(a%x), 1.0_real64 / sqrt(d), -a%x / d**1.5_real64)
+        d = a%x * a%x - 1.0d0
+        c = hd_compose(a, acosh(a%x), 1.0d0 / sqrt(d), -a%x / d**1.5d0)
     end function
 
     pure function hd_atanh(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: d
-        d = 1.0_real64 - a%x * a%x
-        c = hd_compose(a, atanh(a%x), 1.0_real64 / d, 2.0_real64 * a%x / d**2)
+        d = 1.0d0 - a%x * a%x
+        c = hd_compose(a, atanh(a%x), 1.0d0 / d, 2.0d0 * a%x / d**2)
     end function
 
     pure function hd_erf(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: f1
-        f1 = 2.0_real64 / sqrt(acos(-1.0_real64)) * exp(-a%x * a%x)
-        c = hd_compose(a, erf(a%x), f1, -2.0_real64 * a%x * f1)
+        f1 = 2.0d0 / sqrt(acos(-1.0d0)) * exp(-a%x * a%x)
+        c = hd_compose(a, erf(a%x), f1, -2.0d0 * a%x * f1)
     end function
 
     pure function hd_erfc(a) result(c)
         type(hyperdual), intent(in) :: a
         type(hyperdual) :: c
         real(real64) :: f1
-        f1 = -2.0_real64 / sqrt(acos(-1.0_real64)) * exp(-a%x * a%x)
-        c = hd_compose(a, erfc(a%x), f1, -2.0_real64 * a%x * f1)
+        f1 = -2.0d0 / sqrt(acos(-1.0d0)) * exp(-a%x * a%x)
+        c = hd_compose(a, erfc(a%x), f1, -2.0d0 * a%x * f1)
     end function
 
     pure function hd_min(a, b) result(c)
@@ -802,8 +802,8 @@ contains
         type(hyperdual), intent(in) :: a, b
         type(hyperdual) :: c
         real(real64) :: s
-        s = sign(1.0_real64, b%x)
-        c = hd_compose(a, sign(abs(a%x), b%x), s * sign(1.0_real64, a%x), 0.0_real64)
+        s = sign(1.0d0, b%x)
+        c = hd_compose(a, sign(abs(a%x), b%x), s * sign(1.0d0, a%x), 0.0d0)
     end function
 
     pure function hd_sign_real(a, b) result(c)

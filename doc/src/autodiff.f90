@@ -6,5 +6,6 @@ module autodiff
     use autodiff_jacobian
     use autodiff_jvp
     use autodiff_hyperdual_numbers
+    use autodiff_hyperdual_workspace
     use autodiff_hessian
 end module

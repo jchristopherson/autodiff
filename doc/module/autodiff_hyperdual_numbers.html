@@ -6,20 +6,35 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="DIFFEQ is a Fortran automatic differentiation library.">
+      <meta name="description" content="AUTODIFF is a Fortran automatic differentiation library.">
     <meta name="author" content="Jason Christopherson" >
     <link rel="icon" href="../favicon.png">
 
     <title>autodiff_hyperdual_numbers &ndash; AUTODIFF</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="../css/pygments.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
     <link href="../css/local.css" rel="stylesheet">
-      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="../css/pygments.css" rel="stylesheet">
     <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
@@ -75,9 +90,8 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
-                 title="39.1% of total for modules and submodules.">642 statements</a>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="36.3% of total for modules and submodules.">642 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -97,9 +111,11 @@
     </div>
   </div>
   <script>
-    $(function () {
-    $('[data-bs-toggle="tooltip"]').tooltip()
-    })
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
   </script>
 
   </div>
@@ -123,41 +139,41 @@
       </a>
       <div id="inters-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-abs~2">abs</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-acos~2">acos</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-acosh~2">acosh</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-asin~2">asin</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-asinh~2">asinh</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-assignment%28%3D%29~2">assignment(=)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-atan~2">atan</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-atan2~2">atan2</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-atanh~2">atanh</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-cos~2">cos</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-cosh~2">cosh</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-erf~2">erf</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-erfc~2">erfc</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-exp~2">exp</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-log~2">log</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-log10~2">log10</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-max~2">max</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-min~2">min</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28ASTERISK%29~2">operator(*)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28ASTERISKASTERISK%29~2">operator(**)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28%2B%29~2">operator(+)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28-%29~2">operator(-)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28SLASH%29~2">operator(/)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28SLASH%3D%29~2">operator(/=)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28lt%29~2">operator(<)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28lt%3D%29~2">operator(<=)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28%3D%3D%29~2">operator(==)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28gt%29~2">operator(>)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28gt%3D%29~2">operator(>=)</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-sign~2">sign</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-sin~2">sin</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-sinh~2">sinh</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-sqrt~2">sqrt</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-tan~2">tan</a>
-            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-tanh~2">tanh</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-abs">abs</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-acos">acos</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-acosh">acosh</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-asin">asin</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-asinh">asinh</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-assignment%28%3D%29">assignment(=)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-atan">atan</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-atan2">atan2</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-atanh">atanh</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-cos">cos</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-cosh">cosh</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-erf">erf</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-erfc">erfc</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-exp">exp</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-log">log</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-log10">log10</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-max">max</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-min">min</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28ASTERISK%29">operator(*)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28ASTERISKASTERISK%29">operator(**)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28%2B%29">operator(+)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28-%29">operator(-)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28SLASH%29">operator(/)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28SLASH%3D%29">operator(/=)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28lt%29">operator(<)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28lt%3D%29">operator(<=)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28%3D%3D%29">operator(==)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28gt%29">operator(>)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-operator%28gt%3D%29">operator(>=)</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-sign">sign</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-sin">sin</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-sinh">sinh</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-sqrt">sqrt</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-tan">tan</a>
+            <a class="list-group-item" href="../module/autodiff_hyperdual_numbers.html#interface-tanh">tanh</a>
         </div>
       </div>
     </div>
@@ -221,8 +237,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
           <h2>Interfaces</h2>
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-abs~2"></span>
-      <h3>public        interface <a href='..\interface\abs~2.html'>abs</a> 
+      <span class="anchor" id="interface-abs"></span>
+      <h3>public        interface <a href='..\interface\abs.html'>abs</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -249,7 +265,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~130"></span>
+              <span class="anchor" id="variable-a~46"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -277,8 +293,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-acos~2"></span>
-      <h3>public        interface <a href='..\interface\acos~2.html'>acos</a> 
+      <span class="anchor" id="interface-acos"></span>
+      <h3>public        interface <a href='..\interface\acos.html'>acos</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -305,7 +321,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~140"></span>
+              <span class="anchor" id="variable-a~56"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -333,8 +349,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-acosh~2"></span>
-      <h3>public        interface <a href='..\interface\acosh~2.html'>acosh</a> 
+      <span class="anchor" id="interface-acosh"></span>
+      <h3>public        interface <a href='..\interface\acosh.html'>acosh</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -361,7 +377,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~145"></span>
+              <span class="anchor" id="variable-a~61"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -389,8 +405,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-asin~2"></span>
-      <h3>public        interface <a href='..\interface\asin~2.html'>asin</a> 
+      <span class="anchor" id="interface-asin"></span>
+      <h3>public        interface <a href='..\interface\asin.html'>asin</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -417,7 +433,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~139"></span>
+              <span class="anchor" id="variable-a~55"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -445,8 +461,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-asinh~2"></span>
-      <h3>public        interface <a href='..\interface\asinh~2.html'>asinh</a> 
+      <span class="anchor" id="interface-asinh"></span>
+      <h3>public        interface <a href='..\interface\asinh.html'>asinh</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -473,7 +489,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~144"></span>
+              <span class="anchor" id="variable-a~60"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -501,8 +517,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-assignment%28%3D%29~2"></span>
-      <h3>public        interface <a href='..\interface\assignment(=)~2.html'>assignment(=)</a> 
+      <span class="anchor" id="interface-assignment%28%3D%29"></span>
+      <h3>public        interface <a href='..\interface\assignment(=).html'>assignment(=)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -529,7 +545,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-lhs~5"></span>
+              <span class="anchor" id="variable-lhs"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(out)</td>
@@ -544,7 +560,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-rhs~5"></span>
+              <span class="anchor" id="variable-rhs"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -582,7 +598,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-lhs~6"></span>
+              <span class="anchor" id="variable-lhs~2"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(out)</td>
@@ -597,7 +613,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-rhs~6"></span>
+              <span class="anchor" id="variable-rhs~2"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -635,7 +651,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-lhs~7"></span>
+              <span class="anchor" id="variable-lhs~3"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(out)</td>
@@ -650,7 +666,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-rhs~7"></span>
+              <span class="anchor" id="variable-rhs~3"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -688,7 +704,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-lhs~8"></span>
+              <span class="anchor" id="variable-lhs~4"></span>
               real(kind=real64),
             </td>
 <td>intent(out)</td>
@@ -703,7 +719,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-rhs~8"></span>
+              <span class="anchor" id="variable-rhs~4"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -726,8 +742,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-atan~2"></span>
-      <h3>public        interface <a href='..\interface\atan~2.html'>atan</a> 
+      <span class="anchor" id="interface-atan"></span>
+      <h3>public        interface <a href='..\interface\atan.html'>atan</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -754,7 +770,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~138"></span>
+              <span class="anchor" id="variable-a~54"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -797,7 +813,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-y~4"></span>
+              <span class="anchor" id="variable-y"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -812,7 +828,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~12"></span>
+              <span class="anchor" id="variable-x~8"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -855,7 +871,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-y~5"></span>
+              <span class="anchor" id="variable-y~2"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -870,7 +886,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~13"></span>
+              <span class="anchor" id="variable-x~9"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -913,7 +929,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-y~6"></span>
+              <span class="anchor" id="variable-y~3"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -928,7 +944,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~14"></span>
+              <span class="anchor" id="variable-x~10"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -956,8 +972,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-atan2~2"></span>
-      <h3>public        interface <a href='..\interface\atan2~2.html'>atan2</a> 
+      <span class="anchor" id="interface-atan2"></span>
+      <h3>public        interface <a href='..\interface\atan2.html'>atan2</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -984,7 +1000,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-y~4"></span>
+              <span class="anchor" id="variable-y"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -999,7 +1015,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~12"></span>
+              <span class="anchor" id="variable-x~8"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1042,7 +1058,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-y~5"></span>
+              <span class="anchor" id="variable-y~2"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1057,7 +1073,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~13"></span>
+              <span class="anchor" id="variable-x~9"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -1100,7 +1116,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-y~6"></span>
+              <span class="anchor" id="variable-y~3"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -1115,7 +1131,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~14"></span>
+              <span class="anchor" id="variable-x~10"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1143,8 +1159,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-atanh~2"></span>
-      <h3>public        interface <a href='..\interface\atanh~2.html'>atanh</a> 
+      <span class="anchor" id="interface-atanh"></span>
+      <h3>public        interface <a href='..\interface\atanh.html'>atanh</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1171,7 +1187,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~146"></span>
+              <span class="anchor" id="variable-a~62"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1199,8 +1215,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-cos~2"></span>
-      <h3>public        interface <a href='..\interface\cos~2.html'>cos</a> 
+      <span class="anchor" id="interface-cos"></span>
+      <h3>public        interface <a href='..\interface\cos.html'>cos</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1227,7 +1243,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~136"></span>
+              <span class="anchor" id="variable-a~52"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1255,8 +1271,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-cosh~2"></span>
-      <h3>public        interface <a href='..\interface\cosh~2.html'>cosh</a> 
+      <span class="anchor" id="interface-cosh"></span>
+      <h3>public        interface <a href='..\interface\cosh.html'>cosh</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1283,7 +1299,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~142"></span>
+              <span class="anchor" id="variable-a~58"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1311,8 +1327,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-erf~2"></span>
-      <h3>public        interface <a href='..\interface\erf~2.html'>erf</a> 
+      <span class="anchor" id="interface-erf"></span>
+      <h3>public        interface <a href='..\interface\erf.html'>erf</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1339,7 +1355,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~147"></span>
+              <span class="anchor" id="variable-a~63"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1367,8 +1383,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-erfc~2"></span>
-      <h3>public        interface <a href='..\interface\erfc~2.html'>erfc</a> 
+      <span class="anchor" id="interface-erfc"></span>
+      <h3>public        interface <a href='..\interface\erfc.html'>erfc</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1395,7 +1411,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~148"></span>
+              <span class="anchor" id="variable-a~64"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1423,8 +1439,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-exp~2"></span>
-      <h3>public        interface <a href='..\interface\exp~2.html'>exp</a> 
+      <span class="anchor" id="interface-exp"></span>
+      <h3>public        interface <a href='..\interface\exp.html'>exp</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1451,7 +1467,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~132"></span>
+              <span class="anchor" id="variable-a~48"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1479,8 +1495,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-log~2"></span>
-      <h3>public        interface <a href='..\interface\log~2.html'>log</a> 
+      <span class="anchor" id="interface-log"></span>
+      <h3>public        interface <a href='..\interface\log.html'>log</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1507,7 +1523,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~133"></span>
+              <span class="anchor" id="variable-a~49"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1535,8 +1551,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-log10~2"></span>
-      <h3>public        interface <a href='..\interface\log10~2.html'>log10</a> 
+      <span class="anchor" id="interface-log10"></span>
+      <h3>public        interface <a href='..\interface\log10.html'>log10</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1563,7 +1579,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~134"></span>
+              <span class="anchor" id="variable-a~50"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1591,8 +1607,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-max~2"></span>
-      <h3>public        interface <a href='..\interface\max~2.html'>max</a> 
+      <span class="anchor" id="interface-max"></span>
+      <h3>public        interface <a href='..\interface\max.html'>max</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1619,7 +1635,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~152"></span>
+              <span class="anchor" id="variable-a~68"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1634,7 +1650,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~109"></span>
+              <span class="anchor" id="variable-b~45"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1677,7 +1693,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~153"></span>
+              <span class="anchor" id="variable-a~69"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1692,7 +1708,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~110"></span>
+              <span class="anchor" id="variable-b~46"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -1735,7 +1751,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~154"></span>
+              <span class="anchor" id="variable-a~70"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -1750,7 +1766,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~111"></span>
+              <span class="anchor" id="variable-b~47"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1778,8 +1794,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-min~2"></span>
-      <h3>public        interface <a href='..\interface\min~2.html'>min</a> 
+      <span class="anchor" id="interface-min"></span>
+      <h3>public        interface <a href='..\interface\min.html'>min</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1806,7 +1822,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~149"></span>
+              <span class="anchor" id="variable-a~65"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1821,7 +1837,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~106"></span>
+              <span class="anchor" id="variable-b~42"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1864,7 +1880,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~150"></span>
+              <span class="anchor" id="variable-a~66"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1879,7 +1895,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~107"></span>
+              <span class="anchor" id="variable-b~43"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -1922,7 +1938,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~151"></span>
+              <span class="anchor" id="variable-a~67"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -1937,7 +1953,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~108"></span>
+              <span class="anchor" id="variable-b~44"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -1965,8 +1981,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28ASTERISK%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(ASTERISK)~2.html'>operator(*)</a> 
+      <span class="anchor" id="interface-operator%28ASTERISK%29"></span>
+      <h3>public        interface <a href='..\interface\operator(ASTERISK).html'>operator(*)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -1993,7 +2009,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~98"></span>
+              <span class="anchor" id="variable-a~14"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2008,7 +2024,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~75"></span>
+              <span class="anchor" id="variable-b~11"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2051,7 +2067,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~99"></span>
+              <span class="anchor" id="variable-a~15"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2066,7 +2082,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~76"></span>
+              <span class="anchor" id="variable-b~12"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -2109,7 +2125,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~100"></span>
+              <span class="anchor" id="variable-a~16"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -2124,7 +2140,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~77"></span>
+              <span class="anchor" id="variable-b~13"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2167,7 +2183,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~101"></span>
+              <span class="anchor" id="variable-a~17"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2182,7 +2198,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~78"></span>
+              <span class="anchor" id="variable-b~14"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2225,7 +2241,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~102"></span>
+              <span class="anchor" id="variable-a~18"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2240,7 +2256,7 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~79"></span>
+              <span class="anchor" id="variable-b~15"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2268,8 +2284,8 @@ Overloaded real-valued intrinsic functions with second-order derivative propagat
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28ASTERISKASTERISK%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(ASTERISKASTERISK)~2.html'>operator(**)</a> 
+      <span class="anchor" id="interface-operator%28ASTERISKASTERISK%29"></span>
+      <h3>public        interface <a href='..\interface\operator(ASTERISKASTERISK).html'>operator(**)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -2297,7 +2313,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~108"></span>
+              <span class="anchor" id="variable-a~24"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2312,7 +2328,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~3"></span>
+              <span class="anchor" id="variable-n~9"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2355,7 +2371,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~109"></span>
+              <span class="anchor" id="variable-a~25"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2413,7 +2429,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~110"></span>
+              <span class="anchor" id="variable-a~26"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2428,7 +2444,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~86"></span>
+              <span class="anchor" id="variable-b~22"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2471,7 +2487,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~111"></span>
+              <span class="anchor" id="variable-a~27"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -2486,7 +2502,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~87"></span>
+              <span class="anchor" id="variable-b~23"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2514,8 +2530,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28%2B%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(+)~2.html'>operator(+)</a> 
+      <span class="anchor" id="interface-operator%28%2B%29"></span>
+      <h3>public        interface <a href='..\interface\operator(+).html'>operator(+)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -2542,7 +2558,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~87"></span>
+              <span class="anchor" id="variable-a~3"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2557,7 +2573,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~65"></span>
+              <span class="anchor" id="variable-b"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2600,7 +2616,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~88"></span>
+              <span class="anchor" id="variable-a~4"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2615,7 +2631,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~66"></span>
+              <span class="anchor" id="variable-b~2"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -2658,7 +2674,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~89"></span>
+              <span class="anchor" id="variable-a~5"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -2673,7 +2689,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~67"></span>
+              <span class="anchor" id="variable-b~3"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2716,7 +2732,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~90"></span>
+              <span class="anchor" id="variable-a~6"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2731,7 +2747,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~68"></span>
+              <span class="anchor" id="variable-b~4"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2774,7 +2790,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~91"></span>
+              <span class="anchor" id="variable-a~7"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -2789,7 +2805,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~69"></span>
+              <span class="anchor" id="variable-b~5"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2817,8 +2833,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28-%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(-)~2.html'>operator(-)</a> 
+      <span class="anchor" id="interface-operator%28-%29"></span>
+      <h3>public        interface <a href='..\interface\operator(-).html'>operator(-)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -2845,7 +2861,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~92"></span>
+              <span class="anchor" id="variable-a~8"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2860,7 +2876,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~70"></span>
+              <span class="anchor" id="variable-b~6"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2903,7 +2919,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~93"></span>
+              <span class="anchor" id="variable-a~9"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -2918,7 +2934,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~71"></span>
+              <span class="anchor" id="variable-b~7"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -2961,7 +2977,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~94"></span>
+              <span class="anchor" id="variable-a~10"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -2976,7 +2992,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~72"></span>
+              <span class="anchor" id="variable-b~8"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3019,7 +3035,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~95"></span>
+              <span class="anchor" id="variable-a~11"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3034,7 +3050,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~73"></span>
+              <span class="anchor" id="variable-b~9"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -3077,7 +3093,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~96"></span>
+              <span class="anchor" id="variable-a~12"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -3092,7 +3108,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~74"></span>
+              <span class="anchor" id="variable-b~10"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3135,7 +3151,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~97"></span>
+              <span class="anchor" id="variable-a~13"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3163,8 +3179,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28SLASH%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(SLASH)~2.html'>operator(/)</a> 
+      <span class="anchor" id="interface-operator%28SLASH%29"></span>
+      <h3>public        interface <a href='..\interface\operator(SLASH).html'>operator(/)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -3191,7 +3207,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~103"></span>
+              <span class="anchor" id="variable-a~19"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3206,7 +3222,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~81"></span>
+              <span class="anchor" id="variable-b~17"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3249,7 +3265,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~104"></span>
+              <span class="anchor" id="variable-a~20"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3264,7 +3280,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~82"></span>
+              <span class="anchor" id="variable-b~18"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -3307,7 +3323,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~105"></span>
+              <span class="anchor" id="variable-a~21"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -3322,7 +3338,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~83"></span>
+              <span class="anchor" id="variable-b~19"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3365,7 +3381,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~106"></span>
+              <span class="anchor" id="variable-a~22"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3380,7 +3396,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~84"></span>
+              <span class="anchor" id="variable-b~20"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -3423,7 +3439,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~107"></span>
+              <span class="anchor" id="variable-a~23"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -3438,7 +3454,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~85"></span>
+              <span class="anchor" id="variable-b~21"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3466,8 +3482,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28SLASH%3D%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(SLASH=)~2.html'>operator(/=)</a> 
+      <span class="anchor" id="interface-operator%28SLASH%3D%29"></span>
+      <h3>public        interface <a href='..\interface\operator(SLASH=).html'>operator(/=)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -3494,7 +3510,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~115"></span>
+              <span class="anchor" id="variable-a~31"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3509,7 +3525,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~91"></span>
+              <span class="anchor" id="variable-b~27"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3552,7 +3568,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~116"></span>
+              <span class="anchor" id="variable-a~32"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3567,7 +3583,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~92"></span>
+              <span class="anchor" id="variable-b~28"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -3610,7 +3626,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~117"></span>
+              <span class="anchor" id="variable-a~33"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -3625,7 +3641,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~93"></span>
+              <span class="anchor" id="variable-b~29"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3653,8 +3669,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28lt%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(lt)~2.html'>operator(<)</a> 
+      <span class="anchor" id="interface-operator%28lt%29"></span>
+      <h3>public        interface <a href='..\interface\operator(lt).html'>operator(<)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -3681,7 +3697,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~118"></span>
+              <span class="anchor" id="variable-a~34"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3696,7 +3712,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~94"></span>
+              <span class="anchor" id="variable-b~30"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3739,7 +3755,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~119"></span>
+              <span class="anchor" id="variable-a~35"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3754,7 +3770,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~95"></span>
+              <span class="anchor" id="variable-b~31"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -3797,7 +3813,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~120"></span>
+              <span class="anchor" id="variable-a~36"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -3812,7 +3828,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~96"></span>
+              <span class="anchor" id="variable-b~32"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3840,8 +3856,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28lt%3D%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(lt=)~2.html'>operator(<=)</a> 
+      <span class="anchor" id="interface-operator%28lt%3D%29"></span>
+      <h3>public        interface <a href='..\interface\operator(lt=).html'>operator(<=)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -3868,7 +3884,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~121"></span>
+              <span class="anchor" id="variable-a~37"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3883,7 +3899,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~97"></span>
+              <span class="anchor" id="variable-b~33"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3926,7 +3942,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~122"></span>
+              <span class="anchor" id="variable-a~38"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -3941,7 +3957,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~98"></span>
+              <span class="anchor" id="variable-b~34"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -3984,7 +4000,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~123"></span>
+              <span class="anchor" id="variable-a~39"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -3999,7 +4015,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~99"></span>
+              <span class="anchor" id="variable-b~35"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4027,8 +4043,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28%3D%3D%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(==)~2.html'>operator(==)</a> 
+      <span class="anchor" id="interface-operator%28%3D%3D%29"></span>
+      <h3>public        interface <a href='..\interface\operator(==).html'>operator(==)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -4055,7 +4071,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~112"></span>
+              <span class="anchor" id="variable-a~28"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4070,7 +4086,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~88"></span>
+              <span class="anchor" id="variable-b~24"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4113,7 +4129,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~113"></span>
+              <span class="anchor" id="variable-a~29"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4128,7 +4144,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~89"></span>
+              <span class="anchor" id="variable-b~25"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -4171,7 +4187,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~114"></span>
+              <span class="anchor" id="variable-a~30"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -4186,7 +4202,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~90"></span>
+              <span class="anchor" id="variable-b~26"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4214,8 +4230,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28gt%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(gt)~2.html'>operator(>)</a> 
+      <span class="anchor" id="interface-operator%28gt%29"></span>
+      <h3>public        interface <a href='..\interface\operator(gt).html'>operator(>)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -4242,7 +4258,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~124"></span>
+              <span class="anchor" id="variable-a~40"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4257,7 +4273,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~100"></span>
+              <span class="anchor" id="variable-b~36"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4300,7 +4316,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~125"></span>
+              <span class="anchor" id="variable-a~41"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4315,7 +4331,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~101"></span>
+              <span class="anchor" id="variable-b~37"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -4358,7 +4374,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~126"></span>
+              <span class="anchor" id="variable-a~42"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -4373,7 +4389,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~102"></span>
+              <span class="anchor" id="variable-b~38"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4401,8 +4417,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-operator%28gt%3D%29~2"></span>
-      <h3>public        interface <a href='..\interface\operator(gt=)~2.html'>operator(>=)</a> 
+      <span class="anchor" id="interface-operator%28gt%3D%29"></span>
+      <h3>public        interface <a href='..\interface\operator(gt=).html'>operator(>=)</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -4429,7 +4445,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~127"></span>
+              <span class="anchor" id="variable-a~43"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4444,7 +4460,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~103"></span>
+              <span class="anchor" id="variable-b~39"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4487,7 +4503,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~128"></span>
+              <span class="anchor" id="variable-a~44"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4502,7 +4518,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~104"></span>
+              <span class="anchor" id="variable-b~40"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -4545,7 +4561,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~129"></span>
+              <span class="anchor" id="variable-a~45"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -4560,7 +4576,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~105"></span>
+              <span class="anchor" id="variable-b~41"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4588,8 +4604,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-sign~2"></span>
-      <h3>public        interface <a href='..\interface\sign~2.html'>sign</a> 
+      <span class="anchor" id="interface-sign"></span>
+      <h3>public        interface <a href='..\interface\sign.html'>sign</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -4616,7 +4632,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~155"></span>
+              <span class="anchor" id="variable-a~71"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4631,7 +4647,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~112"></span>
+              <span class="anchor" id="variable-b~48"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4674,7 +4690,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~156"></span>
+              <span class="anchor" id="variable-a~72"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4689,7 +4705,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~113"></span>
+              <span class="anchor" id="variable-b~49"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -4732,7 +4748,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~157"></span>
+              <span class="anchor" id="variable-a~73"></span>
               real(kind=real64),
             </td>
 <td>intent(in)</td>
@@ -4747,7 +4763,7 @@ raised to a non-integer power must be positive.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b~114"></span>
+              <span class="anchor" id="variable-b~50"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4775,8 +4791,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-sin~2"></span>
-      <h3>public        interface <a href='..\interface\sin~2.html'>sin</a> 
+      <span class="anchor" id="interface-sin"></span>
+      <h3>public        interface <a href='..\interface\sin.html'>sin</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -4803,7 +4819,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~135"></span>
+              <span class="anchor" id="variable-a~51"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4831,8 +4847,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-sinh~2"></span>
-      <h3>public        interface <a href='..\interface\sinh~2.html'>sinh</a> 
+      <span class="anchor" id="interface-sinh"></span>
+      <h3>public        interface <a href='..\interface\sinh.html'>sinh</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -4859,7 +4875,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~141"></span>
+              <span class="anchor" id="variable-a~57"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4887,8 +4903,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-sqrt~2"></span>
-      <h3>public        interface <a href='..\interface\sqrt~2.html'>sqrt</a> 
+      <span class="anchor" id="interface-sqrt"></span>
+      <h3>public        interface <a href='..\interface\sqrt.html'>sqrt</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -4915,7 +4931,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~131"></span>
+              <span class="anchor" id="variable-a~47"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4943,8 +4959,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-tan~2"></span>
-      <h3>public        interface <a href='..\interface\tan~2.html'>tan</a> 
+      <span class="anchor" id="interface-tan"></span>
+      <h3>public        interface <a href='..\interface\tan.html'>tan</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -4971,7 +4987,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~137"></span>
+              <span class="anchor" id="variable-a~53"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -4999,8 +5015,8 @@ raised to a non-integer power must be positive.</p>
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-tanh~2"></span>
-      <h3>public        interface <a href='..\interface\tanh~2.html'>tanh</a> 
+      <span class="anchor" id="interface-tanh"></span>
+      <h3>public        interface <a href='..\interface\tanh.html'>tanh</a> 
       </h3>
     </div>
       <div class="card-body">
@@ -5027,7 +5043,7 @@ raised to a non-integer power must be positive.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-a~143"></span>
+              <span class="anchor" id="variable-a~59"></span>
               type(<a href='..\type\hyperdual.html'>hyperdual</a>),
             </td>
 <td>intent(in)</td>
@@ -5086,7 +5102,7 @@ and zero otherwise.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-dx~2"></span>
+              <span class="anchor" id="variable-dx"></span>
               real(kind=real64),
             </td>
               <td>public</td>
@@ -5137,7 +5153,7 @@ and zero otherwise.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-x~11"></span>
+              <span class="anchor" id="variable-x~7"></span>
               real(kind=real64),
             </td>
               <td>public</td>
@@ -5176,40 +5192,21 @@ and zero otherwise.</p>
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>AUTODIFF was developed by Jason Christopherson<br>&copy; 2026 
+          <div class="col">
+            <p>
+              AUTODIFF
+ was developed by Jason Christopherson<br>              &copy; 2026 
 </p>
           </div>
           <div class="col">
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-11-18 05:58              </p>
+ on 2026-11-18 12:44 -0600             </p>
           </div>
         </div>
         <br>
       </div> <!-- /container -->
     </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
-
-    <!-- MathJax JavaScript
-             ================================================== -->
-             <!-- Placed at the end of the document so the pages load faster -->
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
-          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
-          });
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-          <script src="../tipuesearch/tipuesearch_content.js"></script>
-          <script src="../tipuesearch/tipuesearch_set.js"></script>
-          <script src="../tipuesearch/tipuesearch.js"></script>
-
   </body>
 </html>
