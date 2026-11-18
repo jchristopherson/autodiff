@@ -6,6 +6,9 @@ add_library(autodiff
     autodiff_gradient.f90
     autodiff_jacobian.f90
     autodiff_jvp.f90
+    autodiff_hyperdual_numbers.f90
+    autodiff_hyperdual_workspace.f90
+    autodiff_hessian.f90
 )
 
 add_library(autodiff::autodiff ALIAS autodiff)
@@ -41,7 +44,7 @@ if(AUTODIFF_ENABLE_OPENMP)
         target_compile_options(${PROJECT_NAME} PUBLIC $<$<COMPILE_LANGUAGE:Fortran>:/openmp>)
         target_link_options(${PROJECT_NAME} PUBLIC $<$<LINK_LANGUAGE:Fortran>:/openmp>)
     else()
-        message(STATUS "OpenMP Fortran support not found; Jacobian columns will be evaluated serially.")
+        message(STATUS "OpenMP Fortran support not found; Jacobian columns and Hessian rows will be evaluated serially.")
     endif()
 endif()
 

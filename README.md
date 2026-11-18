@@ -16,9 +16,11 @@ The documentation can be found [here](https://jchristopherson.github.io/autodiff
 | Scalar gradients | Compute the gradient of a scalar-valued function with `gradient`. |
 | Jacobian matrices | Compute the full Jacobian of a vector-valued function with `jacobian`. |
 | Jacobian-vector products | Evaluate `J(x) v` directly with `jvp`, without forming the Jacobian. |
+| Hessian-vector products | Evaluate `H(x) v` directly with `hvp`, using second-order hyper-dual numbers without forming the Hessian. |
+| Hessian matrices | Compute the Hessian of a scalar-valued function, together with its gradient and value, with `hessian` using second-order hyper-dual numbers. This requires $ n(n+1)/2 $ function evaluations. |
 | Dual-number operations | Propagate derivatives through overloaded arithmetic and common intrinsic functions, including trigonometric, exponential, logarithmic, hyperbolic, and error functions. |
-| Reusable workspace | Pass a `workspace` to differentiation routines to reuse temporary storage across calls. |
-| Optional OpenMP | Evaluate Jacobian columns in parallel when built with OpenMP; control the thread count with `nthreads`. The callback must be thread-safe when using multiple threads. |
+| Reusable workspace | Pass a `workspace` to `gradient` with a dual callback, `jacobian`, or `jvp`. Pass a `hyperdual_workspace` to `gradient` with a hyper-dual callback, `hessian`, or `hvp`. |
+| Optional OpenMP | Evaluate Jacobian columns or Hessian rows in parallel when built with OpenMP; control the thread count with `nthreads`. The callback must be thread-safe when using multiple threads. |
 | Callback context | Pass optional caller-owned `args` through to the user function or subroutine. |
 
 ## Examples
@@ -40,7 +42,7 @@ function rosenbrock(u, args) result(f)
 end function
 ```
 
-The callback operates on `dual` inputs and returns a `dual` result. `gradient` seeds one input direction at a time and returns one partial derivative per element of `x`.
+`gradient` accepts a callback that takes and returns either `dual` or `hyperdual` values. In either case, it seeds one input direction at a time and returns one real partial derivative per element of `x`. The hyper-dual overload lets you reuse the same callback for `gradient`, `hessian`, and `hvp`.
 
 ### Vector-function Jacobian
 
@@ -94,8 +96,8 @@ The build defaults to `Release` when no build type is given. Two options
 control optional features:
 
 - `AUTODIFF_ENABLE_OPENMP` (default `ON`): links OpenMP when found, so
-  `jacobian` can evaluate columns in parallel via its `nthreads` argument.
-  Pass `-DAUTODIFF_ENABLE_OPENMP=OFF` to build serially.
+  `jacobian` and `hessian` can evaluate columns or rows in parallel via their
+  `nthreads` argument. Pass `-DAUTODIFF_ENABLE_OPENMP=OFF` to build serially.
 - `AUTODIFF_ENABLE_IPO` (default `ON`): enables interprocedural optimization
   (LTO) when the compiler supports it.
 

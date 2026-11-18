@@ -1,6 +1,6 @@
 ---
 project: AUTODIFF
-summary: DIFFEQ is a Fortran automatic differentiation library.
+summary: AUTODIFF is a Fortran automatic differentiation library.
 project_github: https://github.com/jchristopherson/autodiff
 author: Jason Christopherson
 src_dir: ./src

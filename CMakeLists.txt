@@ -8,7 +8,7 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 project(
     autodiff
     LANGUAGES Fortran
-    VERSION 1.0.1
+    VERSION 1.1.0
 )
 set(CMAKE_Fortran_STANDARD 2018)
 set(CMAKE_Fortran_STNADARD_REQUIRED TRUE)
@@ -17,7 +17,7 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(CTest)
 
-option(AUTODIFF_ENABLE_OPENMP "Evaluate Jacobian columns in parallel with OpenMP when available" ON)
+option(AUTODIFF_ENABLE_OPENMP "Evaluate Jacobian columns and Hessian rows in parallel with OpenMP when available" ON)
 set(AUTODIFF_CONFIG_NEEDS_OPENMP FALSE)
 if(AUTODIFF_ENABLE_OPENMP)
     find_package(OpenMP COMPONENTS Fortran)
