@@ -17,10 +17,10 @@ The documentation can be found [here](https://jchristopherson.github.io/autodiff
 | Jacobian matrices | Compute the full Jacobian of a vector-valued function with `jacobian`. |
 | Jacobian-vector products | Evaluate `J(x) v` directly with `jvp`, without forming the Jacobian. |
 | Hessian-vector products | Evaluate `H(x) v` directly with `hvp`, using second-order hyper-dual numbers without forming the Hessian. |
-| Hessian matrices | Compute the Hessian of a scalar-valued function, together with its gradient and value, with `hessian` using second-order hyper-dual numbers. |
+| Hessian matrices | Compute the Hessian of a scalar-valued function, together with its gradient and value, with `hessian` using second-order hyper-dual numbers. This requires $ n(n+1)/2 $ function evaluations. |
 | Dual-number operations | Propagate derivatives through overloaded arithmetic and common intrinsic functions, including trigonometric, exponential, logarithmic, hyperbolic, and error functions. |
-| Reusable workspace | Pass a `workspace` to differentiation routines to reuse temporary storage across calls. |
-| Optional OpenMP | Evaluate Jacobian columns in parallel when built with OpenMP; control the thread count with `nthreads`. The callback must be thread-safe when using multiple threads. |
+| Reusable workspace | Pass a `workspace` to first-order routines, or a `hyperdual_workspace` to `hessian` and `hvp`, to reuse temporary storage across calls. Each workspace holds one input buffer per thread. |
+| Optional OpenMP | Evaluate Jacobian columns or Hessian rows in parallel when built with OpenMP; control the thread count with `nthreads`. The callback must be thread-safe when using multiple threads. |
 | Callback context | Pass optional caller-owned `args` through to the user function or subroutine. |
 
 ## Examples
@@ -96,8 +96,8 @@ The build defaults to `Release` when no build type is given. Two options
 control optional features:
 
 - `AUTODIFF_ENABLE_OPENMP` (default `ON`): links OpenMP when found, so
-  `jacobian` can evaluate columns in parallel via its `nthreads` argument.
-  Pass `-DAUTODIFF_ENABLE_OPENMP=OFF` to build serially.
+  `jacobian` and `hessian` can evaluate columns or rows in parallel via their
+  `nthreads` argument. Pass `-DAUTODIFF_ENABLE_OPENMP=OFF` to build serially.
 - `AUTODIFF_ENABLE_IPO` (default `ON`): enables interprocedural optimization
   (LTO) when the compiler supports it.
 
