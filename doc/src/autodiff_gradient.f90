@@ -11,7 +11,7 @@ contains
     subroutine gradient(fcn, x, g, work, args)
         !! Compute a scalar function's gradient by seeding one input direction 
         !! at a time.
-        procedure(scalar_function), pointer, intent(in) :: fcn
+        procedure(scalar_function) :: fcn
             !! User function whose result carries the value and seeded derivative.
         real(real64), intent(in), dimension(:) :: x
             !! Point at which the gradient is evaluated.

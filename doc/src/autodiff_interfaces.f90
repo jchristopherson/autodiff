@@ -1,13 +1,27 @@
 module autodiff_interfaces
     !! Abstract procedure interfaces used by the forward-mode differentiation routines.
     use iso_fortran_env
-    use autodiff_dual_numbers
     implicit none
     private
     public :: scalar_function
     public :: vector_function
+    public :: hyperdual_function
 
     abstract interface
+
+        function hyperdual_function(x, args) result(f)
+            !! Evaluate a scalar function on hyper-dual inputs; the result's `dx`,
+            !! `dy`, and `dxy` carry the seeded first and mixed second derivatives.
+            use autodiff_hyperdual_numbers, only : hyperdual
+                !! Provides the hyper-dual argument and result type.
+            type(hyperdual), intent(in), dimension(:) :: x
+                !! Input values and derivative seeds.
+            class(*), intent(in), optional :: args
+                !! Optional caller-owned context passed to the function.  It is
+                !! read-only from the function's perspective.
+            type(hyperdual) :: f
+                !! Function value and derivatives.
+        end function
 
         function scalar_function(x, args) result(f)
             !! Evaluate a scalar function on dual inputs; the result's `dx` is 

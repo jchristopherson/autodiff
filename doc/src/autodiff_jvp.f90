@@ -10,7 +10,7 @@ contains
     subroutine jvp(fcn, x, v, Jv, work, args)
         !! Evaluate the directional derivative of a vector function without 
         !! forming its Jacobian.
-        procedure(vector_function), pointer, intent(in) :: fcn
+        procedure(vector_function) :: fcn
             !! User procedure that evaluates the vector-valued function.
         real(real64), intent(in) :: x(:)
             !! Input point at which the directional derivative is evaluated.
