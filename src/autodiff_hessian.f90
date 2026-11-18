@@ -5,10 +5,12 @@ module autodiff_hessian
     use autodiff_interfaces
     use autodiff_hyperdual_workspace
     implicit none
-    private :: init_inputs, hessian_row
+    private
+    public :: hessian
+    public :: hvp
 
 contains
-
+! ------------------------------------------------------------------------------
     subroutine hessian(fcn, x, H, g, f, work, args, nthreads)
         !! Compute a scalar function's Hessian, and optionally its gradient and
         !! value, by seeding hyper-dual inputs.  The Hessian is symmetric and
@@ -91,6 +93,7 @@ contains
         end if
     end subroutine
 
+! ------------------------------------------------------------------------------
     subroutine hvp(fcn, x, v, Hv, work, args)
         !! Evaluate the product of a scalar function's Hessian and a vector
         !! without forming the Hessian.  Each evaluation seeds the first
@@ -139,6 +142,7 @@ contains
         end do
     end subroutine
 
+! ------------------------------------------------------------------------------
     subroutine init_inputs(x, xd)
         !! Copies the evaluation point into a hyper-dual buffer and clears
         !! all derivative seeds.
@@ -153,6 +157,7 @@ contains
         end do
     end subroutine
 
+! ------------------------------------------------------------------------------
     subroutine hessian_row(fcn, xd, i, H, g, f, args)
         !! Evaluates the upper-triangular entries of row 'i' of the Hessian
         !! and mirrors them into column 'i'.  The diagonal evaluation also
@@ -191,4 +196,5 @@ contains
         xd(i)%dx = 0.0d0
     end subroutine
 
+! ------------------------------------------------------------------------------
 end module
